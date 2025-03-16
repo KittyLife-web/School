@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курочка Ряба</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #e64040;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e64040;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .story-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            line-height: 1.6;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .test-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px 30px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #45a049;
+            transition: transform 0.2s;
+        }
+
+        .test-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='books.html'">← Назад к книгам</button>
+        <h1>Курочка Ряба</h1>
+        
+        <div class="story-content">
+            <p>Жили-были дед да баба. И была у них курочка Ряба.</p>
+            
+            <p>Снесла курочка яичко, да не простое - золотое.</p>
+            
+            <p>Дед бил, бил - не разбил.</p>
+            <p>Бабка била, била - не разбила.</p>
+            
+            <p>Мышка бежала, хвостиком махнула - яичко упало и разбилось.</p>
+            
+            <p>Плачет дед, плачет бабка:</p>
+            <p>- Курочка Ряба, снеси нам яичко, да не золотое, а простое!</p>
+            
+            <p>Курочка Ряба снесла им простое яичко.</p>
+        </div>
+
+        <button class="test-button" onclick="window.location.href='book4-test.html'">Пройти тест</button>
+    </div>
+</body>
+</html> 

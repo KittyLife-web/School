@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Умножение на 10 и 100</title>
+    <link rel="stylesheet" href="mathematics.css">
+    <link rel="stylesheet" href="division-practice.css">
+    <style>
+        .practice-page {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        }
+        
+        .task-card {
+            margin-bottom: 20px;
+        }
+        
+        .task-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .check-btn, .reset-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .check-btn {
+            background: #4a90e2;
+            color: white;
+        }
+        
+        .reset-btn {
+            background: #e74c3c;
+            color: white;
+            display: none;
+        }
+        
+        .check-btn:hover {
+            background: #357abd;
+        }
+        
+        .reset-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body class="practice-page">
+    <!-- Навигация -->
+    <nav class="math-nav">
+        <a href="mathematics.html" class="back-button">← К математике</a>
+        <h2>Умножение на 10 и 100</h2>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="practice-content">
+        <!-- Теория -->
+        <section class="theory-section">
+            <h3>Как умножать на 10 и 100?</h3>
+            <div class="theory-content">
+                <p>При умножении на 10 нужно приписать один ноль справа к числу.</p>
+                <p>При умножении на 100 нужно приписать два нуля справа к числу.</p>
+                <div class="example-box">
+                    <p>Примеры:</p>
+                    <ul>
+                        <li>5 × 10 = 50 (приписали один ноль)</li>
+                        <li>5 × 100 = 500 (приписали два нуля)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Задачи -->
+        <section class="tasks-section">
+            <h3>Решите примеры:</h3>
+            <div class="tasks-container" id="tasksContainer">
+                <!-- Задачи будут добавлены через JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="math-footer">
+        <p>Практикуйтесь и учитесь! 📚</p>
+    </footer>
+
+    <!-- Шаблон для задачи -->
+    <template id="taskTemplate">
+        <div class="task-card">
+            <div class="task-content">
+                <span class="task-number"></span>
+                <span class="task-text"></span>
+                <input type="number" class="answer-input" placeholder="Ответ">
+                <div class="task-buttons">
+                    <button class="check-btn">Проверить</button>
+                    <button class="reset-btn">Сбросить</button>
+                </div>
+            </div>
+            <div class="result-icon"></div>
+        </div>
+    </template>
+
+    <script>
+        // Генерация случайного числа в диапазоне
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Создание задачи
+        function createTask(number) {
+            const template = document.getElementById('taskTemplate');
+            const taskElement = template.content.cloneNode(true);
+            
+            const num1 = getRandomNumber(1, 20);
+            const num2 = Math.random() < 0.5 ? 10 : 100;
+            const correctAnswer = num1 * num2;
+
+            const taskCard = taskElement.querySelector('.task-card');
+            const taskNumber = taskCard.querySelector('.task-number');
+            const taskText = taskCard.querySelector('.task-text');
+            const input = taskCard.querySelector('.answer-input');
+            const checkBtn = taskCard.querySelector('.check-btn');
+            const resetBtn = taskCard.querySelector('.reset-btn');
+            const resultIcon = taskCard.querySelector('.result-icon');
+
+            taskNumber.textContent = `${number}.`;
+            taskText.textContent = `${num1} × ${num2} = `;
+
+            checkBtn.addEventListener('click', () => {
+                const userAnswer = parseInt(input.value);
+                if (userAnswer === correctAnswer) {
+                    resultIcon.innerHTML = '✓';
+                    resultIcon.className = 'result-icon correct';
+                } else {
+                    resultIcon.innerHTML = '×';
+                    resultIcon.className = 'result-icon incorrect';
+                }
+                input.disabled = true;
+                checkBtn.style.display = 'none';
+                resetBtn.style.display = 'block';
+            });
+
+            resetBtn.addEventListener('click', () => {
+                input.value = '';
+                input.disabled = false;
+                resultIcon.innerHTML = '';
+                resultIcon.className = 'result-icon';
+                checkBtn.style.display = 'block';
+                resetBtn.style.display = 'none';
+            });
+
+            return taskElement;
+        }
+
+        // Генерация всех задач
+        const tasksContainer = document.getElementById('tasksContainer');
+        for (let i = 1; i <= 20; i++) {
+            tasksContainer.appendChild(createTask(i));
+        }
+    </script>
+</body>
+</html> 

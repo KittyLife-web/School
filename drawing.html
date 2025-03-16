@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рисование</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #E3F2FD, #BBDEFB);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #1976D2;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #1976D2;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #1976D2;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .canvas-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        #drawingCanvas {
+            border: 2px solid #1976D2;
+            border-radius: 10px;
+            cursor: crosshair;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            color: #1976D2;
+            font-weight: bold;
+        }
+
+        input[type="color"] {
+            width: 50px;
+            height: 30px;
+            padding: 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="range"] {
+            width: 100px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background: #1976D2;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: #1565C0;
+            transform: translateY(-2px);
+        }
+
+        .clear-btn {
+            background: #F44336;
+        }
+
+        .clear-btn:hover {
+            background: #D32F2F;
+        }
+
+        .save-btn {
+            background: #4CAF50;
+        }
+
+        .save-btn:hover {
+            background: #388E3C;
+        }
+
+        .tools {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tool-btn {
+            padding: 10px;
+            border: 2px solid #1976D2;
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tool-btn.active {
+            background: #1976D2;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+            }
+            
+            .control-group {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← На главную</a>
+
+        <div class="header">
+            <h1>Рисование</h1>
+        </div>
+
+        <div class="canvas-container">
+            <div class="tools">
+                <button class="tool-btn active" onclick="setTool('brush')">🖌️ Кисть</button>
+                <button class="tool-btn" onclick="setTool('line')">📏 Линия</button>
+                <button class="tool-btn" onclick="setTool('rect')">⬜ Прямоугольник</button>
+                <button class="tool-btn" onclick="setTool('circle')">⭕ Круг</button>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="colorPicker">Цвет:</label>
+                    <input type="color" id="colorPicker" value="#000000">
+                </div>
+                
+                <div class="control-group">
+                    <label for="lineWidth">Толщина:</label>
+                    <input type="range" id="lineWidth" min="1" max="50" value="5">
+                </div>
+
+                <button class="button clear-btn" onclick="clearCanvas()">Очистить</button>
+                <button class="button save-btn" onclick="saveDrawing()">Сохранить</button>
+            </div>
+
+            <canvas id="drawingCanvas" width="700" height="400"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let currentTool = 'brush';
+        let startX, startY;
+
+        // Устанавливаем белый фон
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Настройка canvas для поддержки HD дисплеев
+        function setupCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.getBoundingClientRect();
+            
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            
+            ctx.scale(dpr, dpr);
+            canvas.style.width = `${rect.width}px`;
+            canvas.style.height = `${rect.height}px`;
+        }
+
+        setupCanvas();
+
+        function setTool(tool) {
+            currentTool = tool;
+            document.querySelectorAll('.tool-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            };
+        }
+
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getMousePos(e);
+            startX = pos.x;
+            startY = pos.y;
+            
+            if (currentTool === 'brush') {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+            }
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const pos = getMousePos(e);
+            ctx.strokeStyle = document.getElementById('colorPicker').value;
+            ctx.lineWidth = document.getElementById('lineWidth').value;
+            ctx.lineCap = 'round';
+            
+            if (currentTool === 'brush') {
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+            } else {
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = canvas.width;
+                tempCanvas.height = canvas.height;
+                const tempCtx = tempCanvas.getContext('2d');
+                
+                // Копируем текущий рисунок
+                tempCtx.drawImage(canvas, 0, 0);
+                
+                // Рисуем новую фигуру
+                tempCtx.strokeStyle = ctx.strokeStyle;
+                tempCtx.lineWidth = ctx.lineWidth;
+                tempCtx.beginPath();
+                
+                switch(currentTool) {
+                    case 'line':
+                        tempCtx.moveTo(startX, startY);
+                        tempCtx.lineTo(pos.x, pos.y);
+                        break;
+                    case 'rect':
+                        tempCtx.strokeRect(
+                            Math.min(startX, pos.x),
+                            Math.min(startY, pos.y),
+                            Math.abs(pos.x - startX),
+                            Math.abs(pos.y - startY)
+                        );
+                        break;
+                    case 'circle':
+                        const radius = Math.sqrt(
+                            Math.pow(pos.x - startX, 2) +
+                            Math.pow(pos.y - startY, 2)
+                        );
+                        tempCtx.arc(startX, startY, radius, 0, Math.PI * 2);
+                        break;
+                }
+                
+                tempCtx.stroke();
+                
+                // Очищаем и обновляем основной холст
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(tempCanvas, 0, 0);
+            }
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function clearCanvas() {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveDrawing() {
+            const link = document.createElement('a');
+            link.download = 'рисунок.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        // Обработка изменения размера окна
+        window.addEventListener('resize', setupCanvas);
+    </script>
+</body>
+</html> 

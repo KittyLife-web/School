@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по делению</title>
+    <link rel="stylesheet" href="mathematics.css">
+    <link rel="stylesheet" href="division-practice.css">
+</head>
+<body class="practice-page">
+    <!-- Навигация -->
+    <nav class="math-nav">
+        <a href="mathematics.html" class="back-button">← К математике</a>
+        <h2>Тест по делению</h2>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="practice-content">
+        <!-- Теория -->
+        <section class="theory-section">
+            <h3>Как делить числа?</h3>
+            <div class="theory-content">
+                <p>При делении одного числа на другое мы узнаём, сколько раз одно число содержится в другом.</p>
+                <p>Например: 8 ÷ 2 = 4, потому что 2 содержится в 8 четыре раза (2 × 4 = 8)</p>
+                <div class="example-box">
+                    <p>Важно помнить:</p>
+                    <ul>
+                        <li>Делимое ÷ Делитель = Частное</li>
+                        <li>Частное × Делитель = Делимое</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Задачи -->
+        <section class="tasks-section">
+            <h3>Решите примеры:</h3>
+            <div class="tasks-container" id="tasksContainer">
+                <!-- Задачи будут добавлены через JavaScript -->
+            </div>
+            <div class="check-section">
+                <button class="main-check-btn" onclick="checkAllAnswers()">Проверить всё</button>
+                <div class="results-container" style="display: none;">
+                    <p id="results" class="results-text"></p>
+                    <button class="reset-btn" onclick="resetAll()">Сбросить</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="math-footer">
+        <p>Практикуйтесь и учитесь! 📚</p>
+    </footer>
+
+    <!-- Шаблон для задачи -->
+    <template id="taskTemplate">
+        <div class="task-card">
+            <div class="task-content">
+                <span class="task-number"></span>
+                <span class="task-text"></span>
+                <input type="number" class="answer-input" placeholder="Ответ">
+            </div>
+            <div class="result-icon"></div>
+        </div>
+    </template>
+
+    <script>
+        // Генерация случайного числа в диапазоне
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Создание задачи
+        function createTask(number) {
+            const template = document.getElementById('taskTemplate');
+            const taskElement = template.content.cloneNode(true);
+            
+            // Сначала выбираем делитель от 1 до 10
+            const divisor = getRandomNumber(1, 10);
+            // Затем выбираем множитель от 1 до 10
+            const multiplier = getRandomNumber(1, 10);
+            // Вычисляем делимое как произведение
+            const dividend = divisor * multiplier;
+            // Ответ будет равен множителю
+            const correctAnswer = multiplier;
+
+            const taskCard = taskElement.querySelector('.task-card');
+            const taskNumber = taskCard.querySelector('.task-number');
+            const taskText = taskCard.querySelector('.task-text');
+            const input = taskCard.querySelector('.answer-input');
+            const resultIcon = taskCard.querySelector('.result-icon');
+
+            taskNumber.textContent = `${number}.`;
+            taskText.textContent = `${dividend} ÷ ${divisor} = `;
+
+            return taskElement;
+        }
+
+        function checkAllAnswers() {
+            let correctCount = 0;
+            const tasks = document.querySelectorAll('.task-card');
+            
+            tasks.forEach(task => {
+                const input = task.querySelector('.answer-input');
+                const userAnswer = parseInt(input.value);
+                const divisor = parseInt(task.querySelector('.task-text').textContent.split('÷')[1]);
+                const dividend = parseInt(task.querySelector('.task-text').textContent.split('÷')[0]);
+                const correctAnswer = dividend / divisor;
+                
+                const resultIcon = task.querySelector('.result-icon');
+                if (userAnswer === correctAnswer) {
+                    resultIcon.innerHTML = '✓';
+                    resultIcon.className = 'result-icon correct';
+                    correctCount++;
+                } else {
+                    resultIcon.innerHTML = '×';
+                    resultIcon.className = 'result-icon incorrect';
+                }
+                input.disabled = true;
+            });
+
+            document.querySelector('.results-container').style.display = 'flex';
+            document.getElementById('results').textContent = `${correctCount} из 30 заданий правильно`;
+            document.querySelector('.main-check-btn').style.display = 'none';
+        }
+
+        function resetAll() {
+            const tasks = document.querySelectorAll('.task-card');
+            tasks.forEach(task => {
+                const input = task.querySelector('.answer-input');
+                const resultIcon = task.querySelector('.result-icon');
+                input.value = '';
+                input.disabled = false;
+                resultIcon.innerHTML = '';
+                resultIcon.className = 'result-icon';
+            });
+            
+            document.querySelector('.results-container').style.display = 'none';
+            document.querySelector('.main-check-btn').style.display = 'block';
+        }
+
+        // Генерация всех задач
+        const tasksContainer = document.getElementById('tasksContainer');
+        for (let i = 1; i <= 30; i++) {
+            tasksContainer.appendChild(createTask(i));
+        }
+    </script>
+</body>
+</html> 

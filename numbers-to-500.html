@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Числа до 500</title>
+    <link rel="stylesheet" href="mathematics.css">
+    <style>
+        .practice-page {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            min-height: 100vh;
+        }
+        .tasks-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tasks-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            color: #1976d2;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: #1976d2;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        .task-card {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .task-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .task-number {
+            color: #1976d2;
+            font-weight: bold;
+            min-width: 30px;
+        }
+        .answer-input {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .answer-input:focus {
+            border-color: #1976d2;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+        .check-btn, .reset-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .check-btn {
+            background: #1976d2;
+            color: white;
+        }
+        .check-btn:hover {
+            background: #1565c0;
+        }
+        .reset-btn {
+            background: #e91e63;
+            color: white;
+            display: none;
+        }
+        .reset-btn:hover {
+            background: #d81b60;
+        }
+        .result-icon {
+            font-size: 20px;
+            margin-left: 10px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .result-icon.correct {
+            color: #4caf50;
+            opacity: 1;
+        }
+        .result-icon.incorrect {
+            color: #f44336;
+            opacity: 1;
+        }
+        @media (max-width: 600px) {
+            .task-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .answer-input {
+                width: 100%;
+            }
+        }
+        .progress-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .progress-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s;
+        }
+        .success-message img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body class="practice-page">
+    <nav class="math-nav">
+        <a href="mathematics.html" class="back-button">← К математике</a>
+        <h2>Числа до 500</h2>
+    </nav>
+
+    <div class="tasks-container">
+        <div class="progress-container">
+            <div class="progress-title">Общий прогресс:</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="totalProgress"></div>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <img src="https://cdn-icons-png.flaticon.com/512/6832/6832041.png" alt="Успех">
+            <h3>Поздравляем!</h3>
+            <p>Вы успешно решили все задания! Продолжайте в том же духе!</p>
+        </div>
+
+        <div class="tasks-section">
+            <h3 class="section-title">Сложение</h3>
+            <div class="progress-container">
+                <div class="progress-title">Прогресс по сложению:</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="additionProgress"></div>
+                </div>
+            </div>
+            <div id="additionTasks"></div>
+        </div>
+        
+        <div class="tasks-section">
+            <h3 class="section-title">Вычитание</h3>
+            <div class="progress-container">
+                <div class="progress-title">Прогресс по вычитанию:</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="subtractionProgress"></div>
+                </div>
+            </div>
+            <div id="subtractionTasks"></div>
+        </div>
+    </div>
+
+    <script>
+        let correctAnswers = {
+            addition: 0,
+            subtraction: 0
+        };
+
+        function updateProgress() {
+            const additionProgress = (correctAnswers.addition / 15) * 100;
+            const subtractionProgress = (correctAnswers.subtraction / 15) * 100;
+            const totalProgress = ((correctAnswers.addition + correctAnswers.subtraction) / 30) * 100;
+
+            document.getElementById('additionProgress').style.width = additionProgress + '%';
+            document.getElementById('subtractionProgress').style.width = subtractionProgress + '%';
+            document.getElementById('totalProgress').style.width = totalProgress + '%';
+
+            if (totalProgress === 100) {
+                document.getElementById('successMessage').style.display = 'block';
+            }
+        }
+
+        function generateAdditionTask() {
+            const num1 = Math.floor(Math.random() * 250) + 1;
+            const num2 = Math.floor(Math.random() * (500 - num1)) + 1;
+            return {
+                expression: `${num1} + ${num2}`,
+                answer: num1 + num2
+            };
+        }
+
+        function generateSubtractionTask() {
+            const result = Math.floor(Math.random() * 250) + 1;
+            const subtractor = Math.floor(Math.random() * 250) + 1;
+            const num1 = result + subtractor;
+            return {
+                expression: `${num1} - ${subtractor}`,
+                answer: result
+            };
+        }
+
+        function createTask(task, index, container, type) {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'task-card';
+            taskElement.innerHTML = `
+                <div class="task-content">
+                    <span class="task-number">${index + 1}.</span>
+                    <span class="task-text">${task.expression} = </span>
+                    <input type="number" class="answer-input" data-correct="${task.answer}" data-type="${type}">
+                    <button class="check-btn" onclick="checkAnswer(this)">Проверить</button>
+                    <button class="reset-btn" onclick="resetTask(this)">Сбросить</button>
+                    <span class="result-icon"></span>
+                </div>
+            `;
+            container.appendChild(taskElement);
+        }
+
+        function checkAnswer(button) {
+            const taskContent = button.parentElement;
+            const input = taskContent.querySelector('.answer-input');
+            const resultIcon = taskContent.querySelector('.result-icon');
+            const resetBtn = taskContent.querySelector('.reset-btn');
+            
+            const userAnswer = parseInt(input.value);
+            const correctAnswer = parseInt(input.dataset.correct);
+            const type = input.dataset.type;
+
+            input.disabled = true;
+            button.style.display = 'none';
+            resetBtn.style.display = 'inline-block';
+
+            if (userAnswer === correctAnswer) {
+                resultIcon.textContent = '✓';
+                resultIcon.className = 'result-icon correct';
+                if (!input.dataset.counted) {
+                    correctAnswers[type]++;
+                    input.dataset.counted = 'true';
+                    updateProgress();
+                }
+            } else {
+                resultIcon.textContent = '×';
+                resultIcon.className = 'result-icon incorrect';
+            }
+        }
+
+        function resetTask(button) {
+            const taskContent = button.parentElement;
+            const input = taskContent.querySelector('.answer-input');
+            const checkBtn = taskContent.querySelector('.check-btn');
+            const resultIcon = taskContent.querySelector('.result-icon');
+
+            if (input.dataset.counted === 'true') {
+                correctAnswers[input.dataset.type]--;
+                input.dataset.counted = 'false';
+                updateProgress();
+            }
+
+            input.value = '';
+            input.disabled = false;
+            button.style.display = 'none';
+            checkBtn.style.display = 'inline-block';
+            resultIcon.className = 'result-icon';
+            resultIcon.textContent = '';
+        }
+
+        function createTasks() {
+            const additionContainer = document.getElementById('additionTasks');
+            const subtractionContainer = document.getElementById('subtractionTasks');
+
+            for (let i = 0; i < 15; i++) {
+                const additionTask = generateAdditionTask();
+                const subtractionTask = generateSubtractionTask();
+                createTask(additionTask, i, additionContainer, 'addition');
+                createTask(subtractionTask, i, subtractionContainer, 'subtraction');
+            }
+        }
+
+        createTasks();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация в классе</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .registration-form {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .registration-form input {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 200px;
+        }
+
+        .registration-form button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .registration-form button:hover {
+            background: #45a049;
+        }
+
+        .class-section {
+            margin-top: 30px;
+        }
+
+        .class-title {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .classmates-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .classmate-item {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">Назад</button>
+    
+    <div class="container">
+        <h1>Регистрация в классе</h1>
+        
+        <div class="registration-form">
+            <input type="text" id="studentName" placeholder="Введите своё имя">
+            <button onclick="registerStudent()">Зарегистрироваться</button>
+        </div>
+
+        <div class="class-section">
+            <h2 class="class-title">Мой класс</h2>
+            <ul id="classmatesList" class="classmates-list">
+                <!-- Список одноклассников будет добавляться динамически -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Функция для регистрации нового ученика
+        function registerStudent() {
+            const name = document.getElementById('studentName').value.trim();
+            if (name) {
+                // Получаем текущий список одноклассников
+                let classmates = JSON.parse(localStorage.getItem('classmates') || '[]');
+                
+                // Проверяем, не зарегистрирован ли уже ученик
+                if (!classmates.includes(name)) {
+                    // Добавляем нового ученика
+                    classmates.push(name);
+                    // Сохраняем обновленный список
+                    localStorage.setItem('classmates', JSON.stringify(classmates));
+                    // Очищаем поле ввода
+                    document.getElementById('studentName').value = '';
+                    // Обновляем список на странице
+                    updateClassmatesList();
+                } else {
+                    alert('Это имя уже зарегистрировано!');
+                }
+            } else {
+                alert('Пожалуйста, введите имя!');
+            }
+        }
+
+        // Функция для обновления списка одноклассников
+        function updateClassmatesList() {
+            const classmates = JSON.parse(localStorage.getItem('classmates') || '[]');
+            const list = document.getElementById('classmatesList');
+            list.innerHTML = '';
+            
+            classmates.forEach(name => {
+                const li = document.createElement('li');
+                li.className = 'classmate-item';
+                li.textContent = name;
+                list.appendChild(li);
+            });
+        }
+
+        // Обновляем список при загрузке страницы
+        document.addEventListener('DOMContentLoaded', updateClassmatesList);
+    </script>
+</body>
+</html> 

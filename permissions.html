@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление разрешениями</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .permission-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .permission-info {
+            flex: 1;
+        }
+
+        .permission-title {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .permission-description {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .permission-status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+
+        .status-granted {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+
+        .status-denied {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+
+        .permission-button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+
+        .permission-button:hover {
+            background: #1976D2;
+        }
+
+        .permission-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .back-button:hover {
+            background: #45a049;
+        }
+
+        #cameraPreview {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">Назад</button>
+    
+    <div class="container">
+        <h1>Управление разрешениями</h1>
+        
+        <div class="permission-card">
+            <div class="permission-info">
+                <h2 class="permission-title">Доступ к камере</h2>
+                <p class="permission-description">Разрешите доступ к камере для участия в видеоуроках и общения с одноклассниками</p>
+            </div>
+            <div class="permission-status" id="cameraStatus">Не запрошено</div>
+            <button class="permission-button" onclick="requestCameraPermission()" id="cameraButton">Запросить доступ</button>
+        </div>
+
+        <video id="cameraPreview" autoplay playsinline></video>
+    </div>
+
+    <script>
+        let stream = null;
+        const cameraButton = document.getElementById('cameraButton');
+        const cameraStatus = document.getElementById('cameraStatus');
+        const cameraPreview = document.getElementById('cameraPreview');
+
+        // Проверяем текущий статус разрешения при загрузке страницы
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const result = await navigator.permissions.query({ name: 'camera' });
+                updateCameraStatus(result.state);
+            } catch (error) {
+                console.log('Ошибка при проверке разрешения камеры:', error);
+            }
+        });
+
+        // Функция для запроса разрешения на использование камеры
+        async function requestCameraPermission() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                cameraPreview.srcObject = stream;
+                cameraPreview.style.display = 'block';
+                updateCameraStatus('granted');
+                cameraButton.disabled = true;
+                cameraButton.textContent = 'Доступ разрешен';
+            } catch (error) {
+                console.log('Ошибка при запросе доступа к камере:', error);
+                updateCameraStatus('denied');
+                cameraButton.textContent = 'Доступ запрещен';
+            }
+        }
+
+        // Функция для обновления статуса камеры
+        function updateCameraStatus(status) {
+            cameraStatus.textContent = getStatusText(status);
+            cameraStatus.className = 'permission-status status-' + status;
+        }
+
+        // Функция для получения текста статуса
+        function getStatusText(status) {
+            switch (status) {
+                case 'granted':
+                    return 'Разрешено';
+                case 'denied':
+                    return 'Запрещено';
+                case 'prompt':
+                    return 'Требуется разрешение';
+                default:
+                    return 'Не запрошено';
+            }
+        }
+
+        // Очищаем поток при закрытии страницы
+        window.addEventListener('beforeunload', () => {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        });
+    </script>
+</body>
+</html> 

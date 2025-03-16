@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Русский язык</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #d32f2f;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: #ef5350;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            transform-origin: left;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #ef5350;
+        }
+
+        .topic-title {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .topic-description {
+            color: #666;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #ef5350;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #d32f2f;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #d32f2f;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← На главную</a>
+        
+        <div class="header">
+            <h1>Русский язык</h1>
+            <p>Изучаем правила русского языка в игровой форме</p>
+        </div>
+
+        <div class="topics-grid">
+            <div class="topic-card">
+                <div class="topic-icon">📝</div>
+                <h2 class="topic-title">Жи-Ши, Ча-Ща, Чу-Щу</h2>
+                <p class="topic-description">Учимся правильно писать слова с сочетаниями жи-ши, ча-ща, чу-щу. Интерактивные упражнения и проверка знаний.</p>
+                <a href="russian-zhi-shi.html" class="nav-button">Начать</a>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">🔤</div>
+                <h2 class="topic-title">Безударные гласные</h2>
+                <p class="topic-description">Изучаем правила проверки безударных гласных в корне слова. Практические задания с подсказками.</p>
+                <a href="russian-vowels.html" class="nav-button">Начать</a>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">📚</div>
+                <h2 class="topic-title">Парные согласные</h2>
+                <p class="topic-description">Учимся различать и правильно писать парные согласные на конце и в середине слова.</p>
+                <a href="russian-consonants.html" class="nav-button">Начать</a>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">✍️</div>
+                <h2 class="topic-title">Большая буква</h2>
+                <p class="topic-description">Изучаем правила написания большой буквы в именах собственных и начале предложения.</p>
+                <a href="russian-capital.html" class="nav-button">Начать</a>
+            </div>
+
+            <div class="topic-card">
+                <div class="topic-icon">📚</div>
+                <h2 class="topic-title">Читать и запоминать</h2>
+                <p class="topic-description">Учимся читать и запоминать тексты разной сложности.</p>
+                <a href="russian-reading.html" class="nav-button">Начать</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

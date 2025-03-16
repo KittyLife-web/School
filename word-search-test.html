@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по поиску слов</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #e64040;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e64040;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 5px;
+            margin: 20px 0;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .grid-cell {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid #e9ecef;
+        }
+
+        .grid-cell:hover {
+            background: #e9ecef;
+        }
+
+        .grid-cell.selected {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+
+        .word-list {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .word-item {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #e9ecef;
+        }
+
+        .word-item.found {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+
+        .check-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 4px 0 #45a049;
+            transition: transform 0.2s;
+        }
+
+        .check-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #45a049;
+        }
+
+        .result {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='test.html'">← Назад к тестам</button>
+        <h1>Тест по поиску слов</h1>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div id="questions-container"></div>
+        
+        <button class="check-button" onclick="checkAnswers()">Проверить</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const words = [
+            {
+                word: "КОШКА",
+                grid: [
+                    "К", "О", "Ш", "К", "А",
+                    "О", "Б", "О", "Р", "Т",
+                    "Ш", "О", "К", "О", "Т",
+                    "К", "Р", "О", "Т", "А",
+                    "А", "Т", "Т", "А", "К"
+                ]
+            },
+            {
+                word: "СОБАКА",
+                grid: [
+                    "С", "О", "Б", "А", "К",
+                    "О", "Б", "А", "К", "А",
+                    "Б", "А", "К", "О", "Т",
+                    "А", "К", "О", "Т", "А",
+                    "К", "А", "Т", "А", "К"
+                ]
+            },
+            {
+                word: "МЫШКА",
+                grid: [
+                    "М", "Ы", "Ш", "К", "А",
+                    "Ы", "Ш", "К", "А", "Т",
+                    "Ш", "К", "А", "Т", "О",
+                    "К", "А", "Т", "О", "К",
+                    "А", "Т", "О", "К", "А"
+                ]
+            }
+        ];
+
+        let currentWord = 0;
+        let selectedCells = [];
+        let foundWords = new Array(words.length).fill(false);
+
+        function displayWordSearch() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            words.forEach((wordData, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question';
+                questionDiv.innerHTML = `
+                    <h3>Найдите слово ${index + 1}</h3>
+                    <div class="word-grid">
+                        ${wordData.grid.map((letter, cellIndex) => `
+                            <div class="grid-cell" onclick="selectCell(${index}, ${cellIndex})">
+                                ${letter}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="word-list">
+                        <div class="word-item" id="word-${index}">${wordData.word}</div>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+
+            updateProgress();
+        }
+
+        function selectCell(wordIndex, cellIndex) {
+            const cells = document.querySelectorAll(`.question:nth-child(${wordIndex + 1}) .grid-cell`);
+            cells.forEach(cell => cell.classList.remove('selected'));
+            cells[cellIndex].classList.add('selected');
+            
+            selectedCells = [cellIndex];
+            checkWord(wordIndex);
+        }
+
+        function checkWord(wordIndex) {
+            const wordData = words[wordIndex];
+            const cells = document.querySelectorAll(`.question:nth-child(${wordIndex + 1}) .grid-cell`);
+            const selectedLetters = selectedCells.map(index => cells[index].textContent).join('');
+            
+            if (selectedLetters === wordData.word) {
+                foundWords[wordIndex] = true;
+                document.getElementById(`word-${wordIndex}`).classList.add('found');
+                selectedCells.forEach(index => cells[index].classList.add('found'));
+            }
+            
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            const found = foundWords.filter(found => found).length;
+            const percentage = (found / words.length) * 100;
+            progress.style.width = `${percentage}%`;
+        }
+
+        function checkAnswers() {
+            const result = document.getElementById('result');
+            const found = foundWords.filter(found => found).length;
+            const percentage = (found / words.length) * 100;
+            let message = '';
+            
+            if (percentage === 100) {
+                message = 'Отлично! Вы нашли все слова! 🔍';
+            } else if (percentage >= 80) {
+                message = 'Очень хорошо! Вы нашли большинство слов! 🎯';
+            } else if (percentage >= 60) {
+                message = 'Хорошо! Продолжайте искать слова! 📖';
+            } else {
+                message = 'Попробуйте еще раз! Найдите больше слов! 📝';
+            }
+
+            result.innerHTML = `
+                <h2>Результат: ${found} из ${words.length} слов найдено</h2>
+                <p>${message}</p>
+                <button class="check-button" onclick="resetTest()">Пройти тест заново</button>
+            `;
+            result.style.display = 'block';
+        }
+
+        function resetTest() {
+            currentWord = 0;
+            selectedCells = [];
+            foundWords = new Array(words.length).fill(false);
+            document.getElementById('result').style.display = 'none';
+            displayWordSearch();
+        }
+
+        // Инициализация при загрузке страницы
+        displayWordSearch();
+    </script>
+</body>
+</html> 

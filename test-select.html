@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор теста</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .topics {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .topic-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+        }
+
+        .start-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .start-button:hover {
+            background: #45a049;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='index.html'">← Назад</button>
+        <h1>На какие темы вы хотите тест?</h1>
+        
+        <div class="topics">
+            <label class="topic-checkbox">
+                <input type="checkbox" name="topic" value="russian"> Русский язык
+            </label>
+            <label class="topic-checkbox">
+                <input type="checkbox" name="topic" value="math"> Математика
+            </label>
+            <label class="topic-checkbox">
+                <input type="checkbox" name="topic" value="drawing"> Рисование
+            </label>
+            <label class="topic-checkbox">
+                <input type="checkbox" name="topic" value="fruits"> Фрукты и овощи
+            </label>
+        </div>
+
+        <button class="start-button" onclick="startTest()">Начать тест</button>
+    </div>
+
+    <script>
+        function startTest() {
+            const selectedTopics = Array.from(document.querySelectorAll('input[name="topic"]:checked'))
+                .map(checkbox => checkbox.value);
+            
+            if (selectedTopics.length === 0) {
+                alert('Пожалуйста, выберите хотя бы одну тему');
+                return;
+            }
+
+            // Сохраняем выбранные темы в localStorage
+            localStorage.setItem('selectedTopics', JSON.stringify(selectedTopics));
+            window.location.href = 'test.html';
+        }
+    </script>
+</body>
+</html> 

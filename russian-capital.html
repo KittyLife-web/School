@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Большая буква</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #d32f2f;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .task-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .task-card {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .task-card:hover {
+            border-color: #ef5350;
+            transform: translateY(-2px);
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-input {
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .word-input {
+            display: inline-block;
+            width: 120px;
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+        }
+
+        .word-input:focus {
+            border-color: #ef5350;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.1);
+        }
+
+        .check-btn, .reset-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #43A047;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            background: #f44336;
+            color: white;
+            display: none;
+        }
+
+        .reset-btn:hover {
+            background: #e53935;
+            transform: translateY(-2px);
+        }
+
+        .progress-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .progress-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s;
+        }
+
+        .success-message img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #d32f2f;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #d32f2f;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .rule-card {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ef5350;
+        }
+
+        .rule-card h3 {
+            color: #d32f2f;
+            margin-top: 0;
+        }
+
+        .rule-card p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .rule-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+
+        .rule-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .rule-list li::before {
+            content: '•';
+            color: #ef5350;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -5px;
+        }
+
+        .examples {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .examples span {
+            color: #ef5350;
+            font-weight: bold;
+        }
+
+        .hint-text {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="russian.html" class="back-button">← К темам</a>
+
+        <div class="header">
+            <h1>Большая буква</h1>
+        </div>
+
+        <div class="rule-card">
+            <h3>Правило:</h3>
+            <p>С большой буквы пишутся:</p>
+            <ul class="rule-list">
+                <li>Первое слово в предложении</li>
+                <li>Имена, отчества и фамилии людей</li>
+                <li>Клички животных</li>
+                <li>Названия стран, городов, улиц</li>
+                <li>Названия рек, озёр, морей</li>
+            </ul>
+            <div class="examples">
+                <p>Примеры:</p>
+                <p><span>Москва</span> - столица России.</p>
+                <p>У <span>Ивана Петровича</span> есть кот <span>Мурзик</span>.</p>
+                <p>Река <span>Волга</span> впадает в <span>Каспийское</span> море.</p>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-title">Ваш прогресс:</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <img src="https://cdn-icons-png.flaticon.com/512/6832/6832041.png" alt="Успех">
+            <h3>Поздравляем!</h3>
+            <p>Вы успешно справились со всеми заданиями!</p>
+        </div>
+
+        <div class="task-section" id="taskSection">
+            <!-- Задания будут добавлены через JavaScript -->
+        </div>
+
+        <button class="check-btn" onclick="checkAnswers()">Проверить</button>
+        <button class="reset-btn" onclick="resetTasks()">Начать заново</button>
+    </div>
+
+    <script>
+        const words = [
+            { 
+                word: "_осква", 
+                correct: "М", 
+                hint: "Столица России", 
+                category: "город"
+            },
+            { 
+                word: "_ван _етрович", 
+                correct: "ИП", 
+                hint: "Имя и отчество человека", 
+                category: "человек"
+            },
+            { 
+                word: "_олга", 
+                correct: "В", 
+                hint: "Самая длинная река в Европе", 
+                category: "река"
+            },
+            { 
+                word: "_оссия", 
+                correct: "Р", 
+                hint: "Наша страна", 
+                category: "страна"
+            },
+            { 
+                word: "_урзик", 
+                correct: "М", 
+                hint: "Кличка кота", 
+                category: "животное"
+            },
+            { 
+                word: "_айкал", 
+                correct: "Б", 
+                hint: "Самое глубокое озеро в мире", 
+                category: "озеро"
+            },
+            { 
+                word: "_ария _ванова", 
+                correct: "МИ", 
+                hint: "Имя и фамилия девочки", 
+                category: "человек"
+            },
+            { 
+                word: "_ёрный _ринц", 
+                correct: "ЧП", 
+                hint: "Кличка коня", 
+                category: "животное"
+            },
+            { 
+                word: "_расная _лощадь", 
+                correct: "КП", 
+                hint: "Главная площадь Москвы", 
+                category: "место"
+            },
+            { 
+                word: "_ихий _кеан", 
+                correct: "ТО", 
+                hint: "Самый большой океан", 
+                category: "океан"
+            }
+        ];
+
+        let correctAnswers = 0;
+        const totalTasks = words.length;
+
+        function createTasks() {
+            const taskSection = document.getElementById('taskSection');
+            words.forEach((word, index) => {
+                const taskCard = document.createElement('div');
+                taskCard.className = 'task-card';
+                
+                const taskContent = document.createElement('div');
+                taskContent.className = 'task-content';
+                
+                const taskInput = document.createElement('div');
+                taskInput.className = 'task-input';
+                
+                let wordParts = word.word.split('_');
+                let correctLetters = word.correct.split('');
+                
+                // Создаём текст задания
+                taskContent.innerHTML = `
+                    <p><strong>${index + 1}. Вставьте пропущенную букву:</strong></p>
+                    <p>${wordParts.join('_')}</p>
+                    <p class="hint-text">Подсказка: ${word.hint}</p>
+                    <p>Категория: ${word.category}</p>
+                `;
+                
+                // Создаём поля ввода
+                correctLetters.forEach((letter, i) => {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'word-input';
+                    input.maxLength = '1';
+                    input.dataset.correct = letter;
+                    if (i > 0) {
+                        taskInput.appendChild(document.createTextNode(' '));
+                    }
+                    taskInput.appendChild(input);
+                });
+                
+                taskCard.appendChild(taskContent);
+                taskCard.appendChild(taskInput);
+                taskSection.appendChild(taskCard);
+            });
+        }
+
+        function updateProgress() {
+            const progress = (correctAnswers / totalTasks) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            if (progress === 100) {
+                document.getElementById('successMessage').style.display = 'block';
+            }
+        }
+
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.word-input');
+            correctAnswers = 0;
+
+            inputs.forEach(input => {
+                const userAnswer = input.value.toUpperCase();
+                const correctAnswer = input.dataset.correct;
+                
+                if (userAnswer === correctAnswer) {
+                    input.style.borderColor = '#4caf50';
+                    correctAnswers++;
+                } else {
+                    input.style.borderColor = '#f44336';
+                }
+                input.disabled = true;
+            });
+
+            updateProgress();
+
+            document.querySelector('.check-btn').style.display = 'none';
+            document.querySelector('.reset-btn').style.display = 'block';
+        }
+
+        function resetTasks() {
+            const inputs = document.querySelectorAll('.word-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.disabled = false;
+                input.style.borderColor = '#e0e0e0';
+            });
+
+            correctAnswers = 0;
+            updateProgress();
+            
+            document.querySelector('.check-btn').style.display = 'block';
+            document.querySelector('.reset-btn').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        createTasks();
+    </script>
+</body>
+</html> 

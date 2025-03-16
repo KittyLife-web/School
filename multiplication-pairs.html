@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра: Найди пару! (умножение)</title>
+    <link rel="stylesheet" href="mathematics.css">
+    <style>
+        .practice-page {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        }
+
+        .game-container {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .game-title {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            text-align: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 2px solid #e6f3ff;
+            user-select: none;
+        }
+
+        .card.selected {
+            border-color: #4a90e2;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        }
+
+        .card.matched {
+            background: #e6f3ff;
+            border-color: #27ae60;
+            cursor: default;
+        }
+
+        .success-message {
+            text-align: center;
+            color: #27ae60;
+            font-size: 1.5rem;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .reset-btn {
+            display: block;
+            margin: 30px auto;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #357abd;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="practice-page">
+    <!-- Навигация -->
+    <nav class="math-nav">
+        <a href="mathematics.html" class="back-button">← К математике</a>
+        <h2>Найди пару! (умножение)</h2>
+    </nav>
+
+    <div class="game-container">
+        <h1 class="game-title">Соедини всё правильно!</h1>
+        <div class="cards-container" id="cardsContainer"></div>
+        <p class="success-message" id="successMessage">Отлично! Все пары найдены!</p>
+        <button class="reset-btn" onclick="resetGame()" style="display: none;">Играть снова</button>
+    </div>
+
+    <script>
+        const examples = [
+            { problem: '8 × 7', answer: '56' },
+            { problem: '6 × 9', answer: '54' },
+            { problem: '7 × 8', answer: '56' },
+            { problem: '5 × 9', answer: '45' },
+            { problem: '7 × 6', answer: '42' },
+            { problem: '8 × 8', answer: '64' },
+            { problem: '5 × 7', answer: '35' },
+            { problem: '9 × 9', answer: '81' },
+            { problem: '6 × 8', answer: '48' },
+            { problem: '7 × 7', answer: '49' }
+        ];
+
+        let selectedCards = [];
+        let matchedPairs = 0;
+
+        function createCards() {
+            const container = document.getElementById('cardsContainer');
+            const allCards = [];
+
+            // Создаем карточки с примерами и ответами
+            examples.forEach(example => {
+                allCards.push(
+                    { text: example.problem, type: 'problem', answer: example.answer },
+                    { text: example.answer, type: 'answer', answer: example.answer }
+                );
+            });
+
+            // Перемешиваем карточки
+            for (let i = allCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allCards[i], allCards[j]] = [allCards[j], allCards[i]];
+            }
+
+            // Создаем DOM элементы для карточек
+            allCards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+                cardElement.textContent = card.text;
+                cardElement.dataset.answer = card.answer;
+                cardElement.dataset.type = card.type;
+                
+                cardElement.addEventListener('click', () => selectCard(cardElement));
+                container.appendChild(cardElement);
+            });
+        }
+
+        function selectCard(card) {
+            if (card.classList.contains('matched') || card.classList.contains('selected')) {
+                return;
+            }
+
+            card.classList.add('selected');
+            selectedCards.push(card);
+
+            if (selectedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = selectedCards;
+            
+            if (card1.dataset.answer === card2.dataset.answer && 
+                card1.dataset.type !== card2.dataset.type) {
+                // Карточки совпали
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+
+                if (matchedPairs === examples.length) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.querySelector('.reset-btn').style.display = 'block';
+                }
+            }
+
+            // Убираем выделение через небольшую задержку
+            setTimeout(() => {
+                selectedCards.forEach(card => card.classList.remove('selected'));
+                selectedCards = [];
+            }, 500);
+        }
+
+        function resetGame() {
+            const container = document.getElementById('cardsContainer');
+            container.innerHTML = '';
+            matchedPairs = 0;
+            selectedCards = [];
+            document.getElementById('successMessage').style.display = 'none';
+            document.querySelector('.reset-btn').style.display = 'none';
+            createCards();
+        }
+
+        // Инициализация игры
+        createCards();
+    </script>
+</body>
+</html> 

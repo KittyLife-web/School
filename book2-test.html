@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по сказке "Репка"</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #e64040;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e64040;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 15px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+        }
+
+        .option:hover {
+            background: #e8f5e9;
+        }
+
+        .option.correct {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .option.incorrect {
+            background: #f44336;
+            color: white;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='book2.html'">← Назад к сказке</button>
+        <h1>Тест по сказке "Репка"</h1>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+
+        <div id="questions"></div>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Кто посадил репку?",
+                options: ["Бабка", "Дед", "Внучка", "Жучка"],
+                correct: 1
+            },
+            {
+                question: "Кто последним пришёл тянуть репку?",
+                options: ["Кошка", "Мышка", "Жучка", "Внучка"],
+                correct: 1
+            },
+            {
+                question: "Сколько всего персонажей тянули репку?",
+                options: ["5", "6", "7", "8"],
+                correct: 2
+            },
+            {
+                question: "Кто позвал Жучку тянуть репку?",
+                options: ["Дед", "Бабка", "Внучка", "Кошка"],
+                correct: 2
+            },
+            {
+                question: "Какой была репка?",
+                options: ["Маленькой", "Средней", "Большой", "Большой-пребольшой"],
+                correct: 3
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function showQuestion() {
+            const question = questions[currentQuestion];
+            const questionsDiv = document.getElementById('questions');
+            questionsDiv.innerHTML = `
+                <div class="question">
+                    <h2>Вопрос ${currentQuestion + 1} из ${questions.length}</h2>
+                    <p>${question.question}</p>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <div class="option" onclick="checkAnswer(${index})">${option}</div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            updateProgress();
+        }
+
+        function checkAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const options = document.querySelectorAll('.option');
+            const correct = questions[currentQuestion].correct;
+
+            options.forEach((option, index) => {
+                if (index === correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            if (selectedIndex === correct) {
+                score++;
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    answered = false;
+                    showQuestion();
+                } else {
+                    showResult();
+                }
+            }, 1500);
+        }
+
+        function updateProgress() {
+            const progress = document.getElementById('progress');
+            progress.style.width = `${(currentQuestion / questions.length) * 100}%`;
+        }
+
+        function showResult() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h2>Тест завершен!</h2>
+                <p>Ваш результат: ${score} из ${questions.length} правильных ответов</p>
+                <p>${score === questions.length ? 'Отлично! Вы отлично знаете сказку!' : 
+                  score >= questions.length * 0.7 ? 'Хорошо! Вы хорошо знаете сказку!' : 
+                  'Попробуйте прочитать сказку ещё раз!'}</p>
+                <button class="back-button" onclick="window.location.href='book2.html'">Вернуться к сказке</button>
+            `;
+            document.getElementById('questions').style.display = 'none';
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html> 

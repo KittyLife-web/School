@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игры</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #e64040;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e64040;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .game-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .game-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .game-title {
+            font-size: 20px;
+            color: #4a4a4a;
+            margin-bottom: 10px;
+        }
+
+        .game-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='other.html'">← Назад</button>
+        <h1>Игры</h1>
+        
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-icon">🎲</div>
+                <div class="game-title">Кости</div>
+                <div class="game-description">Бросайте кости и набирайте очки</div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🎯</div>
+                <div class="game-title">Дартс</div>
+                <div class="game-description">Попадите в цель и набирайте очки</div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🎨</div>
+                <div class="game-title">Рисование</div>
+                <div class="game-description">Рисуйте и создавайте свои шедевры</div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🎵</div>
+                <div class="game-title">Музыка</div>
+                <div class="game-description">Слушайте музыку и угадывайте мелодии</div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon">🎪</div>
+                <div class="game-title">Цирк</div>
+                <div class="game-description">Играйте в цирковые игры и трюки</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

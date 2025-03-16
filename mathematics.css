@@ -1,0 +1,264 @@
+/* Основные стили для страницы математики */
+.math-page {
+    background: linear-gradient(135deg, #e6f3ff, #f0f8ff);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Навигация */
+.math-nav {
+    background: linear-gradient(to right, #4a90e2, #67a6e6);
+    padding: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 10px rgba(74, 144, 226, 0.2);
+}
+
+.math-nav h2 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.back-button {
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-5px);
+}
+
+/* Основной контент */
+.math-content {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Секция с карточками */
+.math-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+/* Общие стили для карточек */
+.math-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #e6f3ff;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Специфические стили для разных карточек */
+.division {
+    border-left: 5px solid #4a90e2;
+}
+
+.multiplication {
+    border-left: 5px solid #2ecc71;
+}
+
+.calculator {
+    border-left: 5px solid #9b59b6;
+}
+
+.games {
+    border-left: 5px solid #e74c3c;
+}
+
+.plus-minus {
+    border-left: 5px solid #3498db;
+}
+
+.math-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(74, 144, 226, 0.2);
+}
+
+.math-card h3 {
+    color: #4a90e2;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #e6f3ff;
+    padding-bottom: 10px;
+}
+
+/* Стили для списков */
+.math-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.math-card ul li {
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.math-card ul li:before {
+    content: '•';
+    position: absolute;
+    left: 8px;
+    color: #4a90e2;
+    font-size: 1.2em;
+}
+
+.math-card a {
+    color: #666;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.math-card a:hover {
+    color: #4a90e2;
+    background: #f0f8ff;
+    padding-left: 15px;
+}
+
+/* Кнопки */
+.game-btn, .level-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.game-btn:hover, .level-btn:hover {
+    transform: translateY(-2px);
+    border-color: #4a90e2;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.game-btn:active, .level-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Достижения */
+.achievements {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 40px;
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.1);
+}
+
+.achievement-badges {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.badge {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background: #f0f8ff;
+    color: #4a90e2;
+    font-weight: bold;
+}
+
+.badge.locked {
+    background: #f5f5f5;
+    color: #999;
+    opacity: 0.7;
+}
+
+/* Подвал */
+.math-footer {
+    background: #4a90e2;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .math-sections {
+        grid-template-columns: 1fr;
+    }
+    
+    .math-nav {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    
+    .achievement-badges {
+        justify-content: center;
+    }
+}
+
+.math-card.achievements {
+    border-left: 5px solid #f1c40f;
+}
+
+.achievements-preview {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.achievements-preview p {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.achievement-btn {
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    width: 100%;
+    box-shadow: 0 3px 10px rgba(243, 156, 18, 0.2);
+}
+
+.achievement-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.achievement-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(243, 156, 18, 0.2);
+}
+
+.games-list, .test-levels {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-top: 15px;
+} 

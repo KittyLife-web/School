@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Деление до 100</title>
+    <link rel="stylesheet" href="mathematics.css">
+    <style>
+        .practice-page {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            min-height: 100vh;
+        }
+        .tasks-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .tasks-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .section-title {
+            color: #f57c00;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: #f57c00;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        .task-card {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .task-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-color: #ffe0b2;
+        }
+        .task-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .task-number {
+            color: #f57c00;
+            font-weight: bold;
+            min-width: 30px;
+            font-size: 18px;
+        }
+        .answer-input {
+            width: 100px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .answer-input:focus {
+            border-color: #f57c00;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(245, 124, 0, 0.1);
+        }
+        .check-all-btn, .reset-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .check-all-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        .check-all-btn:hover {
+            background: #43A047;
+            transform: translateY(-2px);
+        }
+        .reset-btn {
+            background: #f44336;
+            color: white;
+            display: none;
+        }
+        .reset-btn:hover {
+            background: #e53935;
+            transform: translateY(-2px);
+        }
+        .progress-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .progress-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #fff3e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s;
+        }
+        .success-message img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            text-align: center;
+            margin: 20px;
+            font-size: 18px;
+            color: #f44336;
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        @keyframes shake {
+            0%, 100% {transform: translateX(0);}
+            10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+            20%, 40%, 60%, 80% {transform: translateX(5px);}
+        }
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        @media (max-width: 600px) {
+            .task-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .answer-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="practice-page">
+    <nav class="math-nav">
+        <a href="mathematics.html" class="back-button">← К математике</a>
+        <h2>Деление до 100</h2>
+    </nav>
+
+    <div class="tasks-container">
+        <div class="progress-container">
+            <div class="progress-title">Ваш прогресс:</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <img src="https://cdn-icons-png.flaticon.com/512/6832/6832041.png" alt="Успех">
+            <h3>Поздравляем!</h3>
+            <p>Вы успешно решили все примеры! Продолжайте в том же духе!</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="tasks-section">
+            <h3 class="section-title">Решите примеры:</h3>
+            <div id="tasksArea"></div>
+            <button class="check-all-btn" onclick="checkAllAnswers()">Проверить</button>
+            <button class="reset-btn" onclick="resetAll()">Сбросить</button>
+        </div>
+    </div>
+
+    <script>
+        let correctAnswers = 0;
+        const totalTasks = 15;
+
+        function updateProgress() {
+            const progress = (correctAnswers / totalTasks) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            if (progress === 100) {
+                document.getElementById('successMessage').style.display = 'block';
+            }
+        }
+
+        function generateTask() {
+            let quotient = Math.floor(Math.random() * 9) + 2;
+            let divisor = Math.floor(Math.random() * 9) + 2;
+            let dividend = quotient * divisor;
+            return {
+                expression: `${dividend} ÷ ${divisor}`,
+                answer: quotient
+            };
+        }
+
+        function createTasks() {
+            const tasksArea = document.getElementById('tasksArea');
+            for (let i = 0; i < totalTasks; i++) {
+                const task = generateTask();
+                const taskElement = document.createElement('div');
+                taskElement.className = 'task-card';
+                taskElement.innerHTML = `
+                    <div class="task-content">
+                        <span class="task-number">${i + 1}.</span>
+                        <span class="task-text">${task.expression} = </span>
+                        <input type="number" class="answer-input" data-correct="${task.answer}">
+                    </div>
+                `;
+                tasksArea.appendChild(taskElement);
+            }
+        }
+
+        function checkAllAnswers() {
+            const inputs = document.querySelectorAll('.answer-input');
+            let errors = 0;
+            correctAnswers = 0;
+
+            inputs.forEach(input => {
+                const userAnswer = parseInt(input.value);
+                const correctAnswer = parseInt(input.dataset.correct);
+                
+                if (userAnswer === correctAnswer) {
+                    input.style.borderColor = '#4caf50';
+                    correctAnswers++;
+                } else {
+                    input.style.borderColor = '#f44336';
+                    errors++;
+                }
+                input.disabled = true;
+            });
+
+            updateProgress();
+
+            const checkBtn = document.querySelector('.check-all-btn');
+            const resetBtn = document.querySelector('.reset-btn');
+            const errorMessage = document.getElementById('errorMessage');
+
+            checkBtn.style.display = 'none';
+            resetBtn.style.display = 'block';
+
+            if (errors > 0) {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = `Ошибок: ${errors}. Попробуйте ещё раз!`;
+            } else {
+                errorMessage.style.display = 'none';
+            }
+        }
+
+        function resetAll() {
+            const inputs = document.querySelectorAll('.answer-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.disabled = false;
+                input.style.borderColor = '#e0e0e0';
+            });
+
+            correctAnswers = 0;
+            updateProgress();
+            
+            document.querySelector('.check-all-btn').style.display = 'block';
+            document.querySelector('.reset-btn').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        createTasks();
+    </script>
+</body>
+</html> 

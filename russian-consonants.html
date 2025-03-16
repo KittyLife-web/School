@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Парные согласные</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #d32f2f;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #d32f2f;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #d32f2f;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .rule-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .example-word {
+            font-size: 1.5em;
+            color: #d32f2f;
+            margin: 20px 0;
+            padding: 10px;
+            background: #fff3f3;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .task-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-input {
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .word-input {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 40px;
+            text-align: center;
+        }
+
+        .word-input:focus {
+            border-color: #d32f2f;
+            outline: none;
+        }
+
+        .check-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #43A047;
+            transform: translateY(-2px);
+        }
+
+        .pairs-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .pairs-table th, .pairs-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .pairs-table th {
+            background: #f5f5f5;
+            color: #d32f2f;
+        }
+
+        .hint-text {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="russian.html" class="back-button">← К темам</a>
+
+        <div class="header">
+            <h1>Парные согласные</h1>
+        </div>
+
+        <div class="rule-card">
+            <h2>Правило проверки парных согласных</h2>
+            <p>Чтобы проверить парную согласную в слове, нужно изменить слово так, чтобы после согласной стояла гласная или звонкая согласная.</p>
+            
+            <table class="pairs-table">
+                <tr>
+                    <th>Звонкие</th>
+                    <td>Б</td>
+                    <td>В</td>
+                    <td>Г</td>
+                    <td>Д</td>
+                    <td>Ж</td>
+                    <td>З</td>
+                </tr>
+                <tr>
+                    <th>Глухие</th>
+                    <td>П</td>
+                    <td>Ф</td>
+                    <td>К</td>
+                    <td>Т</td>
+                    <td>Ш</td>
+                    <td>С</td>
+                </tr>
+            </table>
+
+            <div class="example-word">
+                <p><strong>Пример:</strong> ска<span style="color: blue">з</span>ка → ска<span style="color: blue">з</span>очный</p>
+                <p class="hint-text">В слове "сказка" пишем З, потому что в проверочном слове "сказочный" после З стоит гласная О</p>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div id="taskSection">
+            <!-- Задания будут добавлены с помощью JavaScript -->
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <h2>🎉 Поздравляем!</h2>
+            <p>Вы успешно справились со всеми заданиями!</p>
+        </div>
+    </div>
+
+    <script>
+        const words = [
+            {
+                word: "ска_ка",
+                correct: "з",
+                hint: "Проверочное слово: сказочный",
+                check: "сказочный"
+            },
+            {
+                word: "ло_ка",
+                correct: "ж",
+                hint: "Проверочное слово: ложечка",
+                check: "ложечка"
+            },
+            {
+                word: "ры_ка",
+                correct: "б",
+                hint: "Проверочное слово: рыбочка",
+                check: "рыбочка"
+            },
+            {
+                word: "тра_ка",
+                correct: "в",
+                hint: "Проверочное слово: травинка",
+                check: "травинка"
+            },
+            {
+                word: "бере_",
+                correct: "г",
+                hint: "Проверочное слово: берега",
+                check: "берега"
+            },
+            {
+                word: "моро_",
+                correct: "з",
+                hint: "Проверочное слово: морозы",
+                check: "морозы"
+            },
+            {
+                word: "дру_",
+                correct: "г",
+                hint: "Проверочное слово: друга",
+                check: "друга"
+            },
+            {
+                word: "хле_",
+                correct: "б",
+                hint: "Проверочное слово: хлеба",
+                check: "хлеба"
+            },
+            {
+                word: "расска_",
+                correct: "з",
+                hint: "Проверочное слово: рассказы",
+                check: "рассказы"
+            },
+            {
+                word: "горо_",
+                correct: "д",
+                hint: "Проверочное слово: города",
+                check: "города"
+            }
+        ];
+
+        function createTasks() {
+            const taskSection = document.getElementById('taskSection');
+            words.forEach((word, index) => {
+                const taskCard = document.createElement('div');
+                taskCard.className = 'task-card';
+                
+                const taskContent = document.createElement('div');
+                taskContent.className = 'task-content';
+                
+                const taskInput = document.createElement('div');
+                taskInput.className = 'task-input';
+                
+                let wordParts = word.word.split('_');
+                
+                taskContent.innerHTML = `
+                    <p><strong>${index + 1}. Вставьте пропущенную букву:</strong></p>
+                    <p>${wordParts.join('_')}</p>
+                    <p class="hint-text">Подсказка: ${word.hint}</p>
+                `;
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'word-input';
+                input.maxLength = '1';
+                input.dataset.correct = word.correct;
+                
+                taskInput.appendChild(input);
+                taskCard.appendChild(taskContent);
+                taskCard.appendChild(taskInput);
+                taskSection.appendChild(taskCard);
+            });
+        }
+
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.word-input');
+            let correctCount = 0;
+            
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.correct.toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    input.style.borderColor = '#4caf50';
+                    correctCount++;
+                } else {
+                    input.style.borderColor = '#f44336';
+                }
+            });
+
+            // Обновляем прогресс-бар
+            const progressBar = document.getElementById('progressBar');
+            const progress = (correctCount / inputs.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Показываем сообщение об успехе, если все ответы правильные
+            const successMessage = document.getElementById('successMessage');
+            if (correctCount === inputs.length) {
+                successMessage.style.display = 'block';
+            } else {
+                successMessage.style.display = 'none';
+            }
+        }
+
+        // Создаем задания при загрузке страницы
+        createTasks();
+
+        // Добавляем кнопку проверки
+        const checkButton = document.createElement('button');
+        checkButton.className = 'check-btn';
+        checkButton.textContent = 'Проверить';
+        checkButton.onclick = checkAnswers;
+        document.getElementById('taskSection').appendChild(checkButton);
+    </script>
+</body>
+</html> 

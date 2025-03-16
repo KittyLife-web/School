@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #e64040;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e64040;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .test-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .test-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .test-title {
+            font-size: 20px;
+            color: #4a4a4a;
+            margin-bottom: 10px;
+        }
+
+        .test-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='index.html'">← Назад на главную</button>
+        <h1>Тесты</h1>
+        
+        <div class="test-grid">
+            <div class="test-card" onclick="window.location.href='colors-test.html'">
+                <div class="test-icon">🎨</div>
+                <div class="test-title">Цвета</div>
+                <div class="test-description">Проверьте свои знания о цветах</div>
+            </div>
+
+            <div class="test-card" onclick="window.location.href='words-test.html'">
+                <div class="test-icon">📝</div>
+                <div class="test-title">Слова</div>
+                <div class="test-description">Тест на знание слов</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

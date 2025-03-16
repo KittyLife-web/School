@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изучаем слова</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #e64040;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e64040;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a4a4a;
+            margin-bottom: 30px;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .topic-button {
+            background: white;
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .topic-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .topic-button.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .question-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .check-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result.success {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .progress {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='index.html'">← Назад</button>
+        <h1>Изучаем слова</h1>
+
+        <div class="topics-grid">
+            <button class="topic-button" onclick="selectTopic('weather')">Погода</button>
+            <button class="topic-button" onclick="selectTopic('animals')">Животные</button>
+            <button class="topic-button" onclick="selectTopic('school')">Школа</button>
+            <button class="topic-button" onclick="selectTopic('home')">Дом</button>
+            <button class="topic-button" onclick="selectTopic('fruits')">Фрукты и овощи</button>
+            <button class="topic-button" onclick="selectTopic('colors')">Цвета</button>
+            <button class="topic-button" onclick="selectTopic('hygiene')">Гигиена</button>
+        </div>
+
+        <div class="question-container">
+            <div class="question"></div>
+            <input type="text" class="answer-input" placeholder="Введите ответ...">
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <button class="check-button" onclick="checkAnswer()">Проверить</button>
+        </div>
+
+        <div class="result"></div>
+    </div>
+
+    <script>
+        const words = {
+            weather: [
+                { question: "Как называется явление, когда капли воды падают с неба?", answer: "дождь" },
+                { question: "Что светит днём на небе и греет землю?", answer: "солнце" },
+                { question: "Как называется явление, когда дует воздух?", answer: "ветер" },
+                { question: "Белые хлопья, падающие зимой - это...", answer: "снег" },
+                { question: "Что появляется на небе после дождя разными цветами?", answer: "радуга" },
+                { question: "Как называются белые облака в небе?", answer: "тучи" },
+                { question: "Что гремит во время грозы?", answer: "гром" },
+                { question: "Когда на улице очень жарко, это...", answer: "жара" },
+                { question: "Когда на улице очень холодно, это...", answer: "мороз" },
+                { question: "Что образуется на лужах зимой?", answer: "лёд" }
+            ],
+            animals: [
+                { question: "Кто мяукает и ловит мышей?", answer: "кошка" },
+                { question: "Кто гавкает и охраняет дом?", answer: "собака" },
+                { question: "Кто любит морковку и прыгает по лесу?", answer: "заяц" },
+                { question: "Какое животное самое большое в лесу?", answer: "медведь" },
+                { question: "Кто живёт в норе и ест сыр?", answer: "мышь" },
+                { question: "Какая птица ухает по ночам?", answer: "сова" },
+                { question: "Кто носит орехи в дупло?", answer: "белка" },
+                { question: "Какая птица приносит весну?", answer: "ласточка" },
+                { question: "Кто кукарекает по утрам?", answer: "петух" },
+                { question: "Кто даёт нам молоко?", answer: "корова" }
+            ],
+            school: [
+                { question: "Чем мы пишем в тетради?", answer: "ручка" },
+                { question: "На чём мы пишем?", answer: "тетрадь" },
+                { question: "Чем мы рисуем?", answer: "карандаш" },
+                { question: "Где мы сидим в классе?", answer: "парта" },
+                { question: "Кто учит детей в школе?", answer: "учитель" },
+                { question: "Что звенит на перемену?", answer: "звонок" },
+                { question: "В чём мы носим учебники?", answer: "портфель" },
+                { question: "Чем мы стираем с доски?", answer: "тряпка" },
+                { question: "На чём пишет учитель мелом?", answer: "доска" },
+                { question: "Из чего мы учимся?", answer: "учебник" }
+            ],
+            home: [
+                { question: "Где мы спим?", answer: "кровать" },
+                { question: "Где мы храним одежду?", answer: "шкаф" },
+                { question: "На чём мы сидим?", answer: "стул" },
+                { question: "Где мы едим?", answer: "стол" },
+                { question: "Где мы моемся?", answer: "ванна" },
+                { question: "Где мы готовим еду?", answer: "кухня" },
+                { question: "Что горит и освещает комнату?", answer: "лампа" },
+                { question: "Через что мы смотрим на улицу?", answer: "окно" },
+                { question: "Через что мы входим в дом?", answer: "дверь" },
+                { question: "На чём мы смотрим телевизор?", answer: "диван" }
+            ],
+            fruits: [
+                { question: "Жёлтый фрукт с кислым вкусом", answer: "лимон" },
+                { question: "Красный овощ для борща", answer: "свекла" },
+                { question: "Оранжевый овощ, который любят зайцы", answer: "морковь" },
+                { question: "Круглый красный овощ для салата", answer: "помидор" },
+                { question: "Зелёный хрустящий овощ", answer: "огурец" },
+                { question: "Жёлтый длинный фрукт", answer: "банан" },
+                { question: "Красное или зелёное круглое яблоко", answer: "яблоко" },
+                { question: "Оранжевый сладкий фрукт", answer: "апельсин" },
+                { question: "Овощ, от которого плачут", answer: "лук" },
+                { question: "Второй хлеб, растёт в земле", answer: "картошка" }
+            ],
+            colors: [
+                { question: "Цвет солнца", answer: "жёлтый" },
+                { question: "Цвет травы", answer: "зелёный" },
+                { question: "Цвет неба", answer: "синий" },
+                { question: "Цвет крови", answer: "красный" },
+                { question: "Цвет снега", answer: "белый" },
+                { question: "Цвет ночи", answer: "чёрный" },
+                { question: "Цвет моркови", answer: "оранжевый" },
+                { question: "Цвет сливы", answer: "фиолетовый" },
+                { question: "Цвет шоколада", answer: "коричневый" },
+                { question: "Цвет поросёнка", answer: "розовый" }
+            ],
+            hygiene: [
+                { question: "Чем мы чистим зубы?", answer: "щётка" },
+                { question: "Чем мы моем руки?", answer: "мыло" },
+                { question: "Чем мы вытираемся после душа?", answer: "полотенце" },
+                { question: "Что мы наносим на волосы при мытье?", answer: "шампунь" },
+                { question: "Чем мы расчёсываем волосы?", answer: "расчёска" },
+                { question: "Что мы используем для чистки ушей?", answer: "ватные палочки" },
+                { question: "Чем мы подстригаем ногти?", answer: "ножницы" },
+                { question: "Что мы используем после душа для кожи?", answer: "крем" },
+                { question: "Чем мы чистим нос при простуде?", answer: "платок" },
+                { question: "Что мы используем для защиты от запаха?", answer: "дезодорант" }
+            ]
+        };
+
+        let currentTopic = null;
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function selectTopic(topic) {
+            currentTopic = topic;
+            currentQuestions = shuffleArray([...words[topic]]);
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            
+            // Обновляем стили кнопок
+            document.querySelectorAll('.topic-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`[onclick="selectTopic('${topic}')"]`).classList.add('active');
+            
+            // Показываем первый вопрос
+            showQuestion();
+            
+            // Показываем контейнер с вопросами
+            document.querySelector('.question-container').style.display = 'block';
+            document.querySelector('.result').style.display = 'none';
+        }
+
+        function showQuestion() {
+            if (currentQuestionIndex < currentQuestions.length) {
+                document.querySelector('.question').textContent = currentQuestions[currentQuestionIndex].question;
+                document.querySelector('.answer-input').value = '';
+                updateProgress();
+            }
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.querySelector('.answer-input').value.toLowerCase().trim();
+            const correctAnswer = currentQuestions[currentQuestionIndex].answer.toLowerCase();
+            
+            if (userAnswer === correctAnswer) {
+                correctAnswers++;
+            }
+            
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < currentQuestions.length) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function updateProgress() {
+            const progress = (currentQuestionIndex / currentQuestions.length) * 100;
+            document.querySelector('.progress').style.width = `${progress}%`;
+        }
+
+        function showResult() {
+            const resultElement = document.querySelector('.result');
+            resultElement.textContent = `${correctAnswers} из ${currentQuestions.length} слов правильно`;
+            resultElement.style.display = 'block';
+            document.querySelector('.question-container').style.display = 'none';
+        }
+    </script>
+</body>
+</html> 

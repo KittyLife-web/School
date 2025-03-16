@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Безударные гласные</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #d32f2f;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .task-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .task-card {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover {
+            border-color: #ef5350;
+            transform: translateY(-2px);
+        }
+
+        .word-input {
+            display: inline-block;
+            width: 120px;
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .word-input:focus {
+            border-color: #ef5350;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.1);
+        }
+
+        .check-btn, .reset-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .check-btn:hover {
+            background: #43A047;
+            transform: translateY(-2px);
+        }
+
+        .reset-btn {
+            background: #f44336;
+            color: white;
+            display: none;
+        }
+
+        .reset-btn:hover {
+            background: #e53935;
+            transform: translateY(-2px);
+        }
+
+        .progress-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .progress-title {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4caf50;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            margin: 20px 0;
+            animation: fadeIn 0.5s;
+        }
+
+        .success-message img {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: white;
+            color: #d32f2f;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #d32f2f;
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        .rule-card {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ef5350;
+        }
+
+        .rule-card h3 {
+            color: #d32f2f;
+            margin-top: 0;
+        }
+
+        .rule-card p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .examples {
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .examples span {
+            color: #ef5350;
+            font-weight: bold;
+        }
+
+        .hint-text {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+
+        .check-pair {
+            color: #2196F3;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="russian.html" class="back-button">← К темам</a>
+
+        <div class="header">
+            <h1>Безударные гласные</h1>
+        </div>
+
+        <div class="rule-card">
+            <h3>Правило:</h3>
+            <p>Чтобы проверить безударную гласную в корне слова, нужно изменить слово или подобрать однокоренное слово так, чтобы эта гласная оказалась под ударением.</p>
+            <div class="examples">
+                <p>Примеры:</p>
+                <p><span>вода́</span> → <span>во́ды</span></p>
+                <p><span>леса́</span> → <span>ле́с</span></p>
+                <p><span>земля́</span> → <span>зе́мли</span></p>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-title">Ваш прогресс:</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <img src="https://cdn-icons-png.flaticon.com/512/6832/6832041.png" alt="Успех">
+            <h3>Поздравляем!</h3>
+            <p>Вы успешно справились со всеми заданиями!</p>
+        </div>
+
+        <div class="task-section" id="taskSection">
+            <!-- Задания будут добавлены через JavaScript -->
+        </div>
+
+        <button class="check-btn" onclick="checkAnswers()">Проверить</button>
+        <button class="reset-btn" onclick="resetTasks()">Начать заново</button>
+    </div>
+
+    <script>
+        const words = [
+            { 
+                word: "в_да", 
+                correct: "о", 
+                hint: "Жидкость для питья", 
+                checkPair: "во́ды"
+            },
+            { 
+                word: "л_сной", 
+                correct: "е", 
+                hint: "Относящийся к лесу", 
+                checkPair: "ле́с"
+            },
+            { 
+                word: "з_мля", 
+                correct: "е", 
+                hint: "Планета, на которой мы живём", 
+                checkPair: "зе́мли"
+            },
+            { 
+                word: "м_ря", 
+                correct: "о", 
+                hint: "Большие водные пространства", 
+                checkPair: "мо́ре"
+            },
+            { 
+                word: "тр_ва", 
+                correct: "а", 
+                hint: "Зелёное растение", 
+                checkPair: "тра́вы"
+            },
+            { 
+                word: "ст_на", 
+                correct: "е", 
+                hint: "Вертикальная часть здания", 
+                checkPair: "сте́ны"
+            },
+            { 
+                word: "гр_за", 
+                correct: "о", 
+                hint: "Природное явление с громом и молнией", 
+                checkPair: "гро́зы"
+            },
+            { 
+                word: "в_сна", 
+                correct: "е", 
+                hint: "Время года после зимы", 
+                checkPair: "ве́сны"
+            },
+            { 
+                word: "р_ка", 
+                correct: "е", 
+                hint: "Водный поток", 
+                checkPair: "ре́ки"
+            },
+            { 
+                word: "п_ля", 
+                correct: "о", 
+                hint: "Большие участки земли", 
+                checkPair: "по́ле"
+            }
+        ];
+
+        let correctAnswers = 0;
+        const totalTasks = words.length;
+
+        function createTasks() {
+            const taskSection = document.getElementById('taskSection');
+            words.forEach((word, index) => {
+                const taskCard = document.createElement('div');
+                taskCard.className = 'task-card';
+                taskCard.innerHTML = `
+                    <p>${index + 1}. Вставьте пропущенную букву:</p>
+                    <p>${word.word.replace('_', `<input type="text" class="word-input" maxlength="1" data-correct="${word.correct}">`)}</p>
+                    <p class="hint-text">Подсказка: ${word.hint}</p>
+                    <p>Проверочное слово: <span class="check-pair">${word.checkPair}</span></p>
+                `;
+                taskSection.appendChild(taskCard);
+            });
+        }
+
+        function updateProgress() {
+            const progress = (correctAnswers / totalTasks) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            if (progress === 100) {
+                document.getElementById('successMessage').style.display = 'block';
+            }
+        }
+
+        function checkAnswers() {
+            const inputs = document.querySelectorAll('.word-input');
+            correctAnswers = 0;
+
+            inputs.forEach(input => {
+                const userAnswer = input.value.toLowerCase();
+                const correctAnswer = input.dataset.correct;
+                
+                if (userAnswer === correctAnswer) {
+                    input.style.borderColor = '#4caf50';
+                    correctAnswers++;
+                } else {
+                    input.style.borderColor = '#f44336';
+                }
+                input.disabled = true;
+            });
+
+            updateProgress();
+
+            document.querySelector('.check-btn').style.display = 'none';
+            document.querySelector('.reset-btn').style.display = 'block';
+        }
+
+        function resetTasks() {
+            const inputs = document.querySelectorAll('.word-input');
+            inputs.forEach(input => {
+                input.value = '';
+                input.disabled = false;
+                input.style.borderColor = '#e0e0e0';
+            });
+
+            correctAnswers = 0;
+            updateProgress();
+            
+            document.querySelector('.check-btn').style.display = 'block';
+            document.querySelector('.reset-btn').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        createTasks();
+    </script>
+</body>
+</html> 

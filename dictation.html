@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диктант</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 0 #e64040;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e64040;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .control-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .listen-button {
+            background: #4CAF50;
+            color: white;
+            box-shadow: 0 4px 0 #45a049;
+        }
+
+        .repeat-button {
+            background: #2196F3;
+            color: white;
+            box-shadow: 0 4px 0 #1976D2;
+        }
+
+        .next-button {
+            background: #9C27B0;
+            color: white;
+            box-shadow: 0 4px 0 #7B1FA2;
+        }
+
+        .control-button:hover {
+            transform: translateY(2px);
+        }
+
+        .listen-button:hover {
+            box-shadow: 0 2px 0 #45a049;
+        }
+
+        .repeat-button:hover {
+            box-shadow: 0 2px 0 #1976D2;
+        }
+
+        .next-button:hover {
+            box-shadow: 0 2px 0 #7B1FA2;
+        }
+
+        .text-input {
+            width: 100%;
+            height: 150px;
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        .check-button {
+            background: #FF9800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #F57C00;
+            transition: all 0.3s;
+        }
+
+        .check-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #F57C00;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #E8F5E9;
+            display: none;
+        }
+
+        .progress {
+            margin-top: 20px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='index.html'">← Назад</button>
+        <h1>Диктант</h1>
+        
+        <div class="controls">
+            <button class="control-button listen-button" onclick="playCurrentSentence()">Слушать</button>
+            <button class="control-button repeat-button" onclick="repeatSentence()">Повторить</button>
+            <button class="control-button next-button" onclick="nextSentence()">Далее</button>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar"></div>
+        </div>
+
+        <textarea class="text-input" placeholder="Введите текст диктанта здесь..."></textarea>
+        <button class="check-button" onclick="checkText()">Проверить</button>
+        <div class="result"></div>
+    </div>
+
+    <script>
+        const dictations = [
+            [
+                "Осенью листья медленно падают на землю.",
+                "Белка прыгает с ветки на ветку.",
+                "В саду расцвели красивые розы.",
+                "Дети весело играют в парке.",
+                "Солнце ярко светит в небе.",
+                "Птицы поют весёлые песни."
+            ],
+            [
+                "Кошка мурлычет на подоконнике.",
+                "Ручей весело журчит в лесу.",
+                "На поляне растут грибы.",
+                "Мама печёт вкусный пирог.",
+                "Рыбки плавают в аквариуме.",
+                "Бабочка села на цветок."
+            ],
+            [
+                "Снег тихо падает на землю.",
+                "Ветер качает деревья в саду.",
+                "Радуга появилась после дождя.",
+                "Мальчик читает интересную книгу.",
+                "Собака охраняет свой дом.",
+                "В небе летит самолёт."
+            ]
+        ];
+
+        let currentDictation = [];
+        let currentSentenceIndex = 0;
+        let synth = window.speechSynthesis;
+
+        function initializeDictation() {
+            currentDictation = dictations[Math.floor(Math.random() * dictations.length)];
+            currentSentenceIndex = 0;
+            updateProgress();
+        }
+
+        function playCurrentSentence() {
+            if (currentSentenceIndex < currentDictation.length) {
+                const utterance = new SpeechSynthesisUtterance(currentDictation[currentSentenceIndex]);
+                utterance.lang = 'ru-RU';
+                utterance.rate = 0.9;
+                utterance.pitch = 1.0;
+                utterance.volume = 1.0;
+                
+                window.speechSynthesis.onvoiceschanged = function() {
+                    const voices = window.speechSynthesis.getVoices();
+                    const russianVoice = voices.find(voice => 
+                        voice.lang.includes('ru-RU') && voice.localService
+                    );
+                    if (russianVoice) {
+                        utterance.voice = russianVoice;
+                    }
+                };
+
+                synth.speak(utterance);
+            }
+        }
+
+        function repeatSentence() {
+            playCurrentSentence();
+        }
+
+        function nextSentence() {
+            if (currentSentenceIndex < currentDictation.length - 1) {
+                currentSentenceIndex++;
+                updateProgress();
+                playCurrentSentence();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentSentenceIndex + 1) / currentDictation.length) * 100;
+            document.querySelector('.progress-bar').style.width = progress + '%';
+        }
+
+        function checkText() {
+            const userText = document.querySelector('.text-input').value.trim();
+            const sentences = userText.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+            let correctCount = 0;
+
+            for (let i = 0; i < Math.min(sentences.length, currentDictation.length); i++) {
+                if (sentences[i].toLowerCase() === currentDictation[i].toLowerCase().replace(/[.!?]+$/, '')) {
+                    correctCount++;
+                }
+            }
+
+            const result = document.querySelector('.result');
+            result.textContent = `${correctCount} из ${currentDictation.length} предложений правильно`;
+            result.style.display = 'block';
+        }
+
+        window.onload = initializeDictation;
+    </script>
+</body>
+</html> 
