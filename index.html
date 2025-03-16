@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Школьные предметы</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: #f0f9ff;
+            min-height: 100vh;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .description-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa2c1 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 15px;
+            box-shadow: 0 4px 0 #ff4757;
+            transition: transform 0.2s;
+        }
+
+        .description-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #ff4757;
+        }
+
+        .test-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 20px;
+        }
+
+        .test-button:hover {
+            background: #45a049;
+        }
+
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 150px auto 40px;
+        }
+
+        .subject-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .subject-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        .subject-card.easy {
+            border: 2px solid #4CAF50;
+        }
+
+        .subject-card.easy h3 {
+            color: #4CAF50;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .difficulty-badge.easy {
+            background: #e8f5e9;
+            color: #4CAF50;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            background: white;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .dictation-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa2c1 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 10px;
+            box-shadow: 0 2px 0 #ff4757;
+            transition: transform 0.2s;
+        }
+
+        .dictation-button:hover {
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 #ff4757;
+        }
+
+        .class-button {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 10px;
+            box-shadow: 0 2px 0 #388E3C;
+            transition: transform 0.2s;
+        }
+
+        .class-button:hover {
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 #388E3C;
+        }
+
+        .subject-card button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+            font-size: 16px;
+        }
+
+        .subject-card button:hover {
+            background: #45a049;
+        }
+
+        .subject-card p {
+            margin: 10px 0;
+            color: #666;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .last-visited {
+            background: #e3f2fd;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 1200px;
+            display: none;
+        }
+
+        .last-visited.show {
+            display: block;
+        }
+
+        .last-visited a {
+            color: #1976d2;
+            text-decoration: none;
+        }
+
+        .last-visited a:hover {
+            text-decoration: underline;
+        }
+
+        .progress-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal input {
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .modal button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .modal button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <!-- Главный раздел -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Добро пожаловать в мир знаний!</h1>
+            <p>Изучайте школьные предметы легко и интересно</p>
+        </div>
+        <div>
+            <button class="description-button" onclick="window.location.href='description.html'">Описание сайта</button>
+            <button class="test-button" onclick="window.location.href='test.html'">Тест</button>
+        </div>
+    </header>
+
+    <!-- Последний посещенный раздел -->
+    <div class="last-visited" id="lastVisited">
+        <p>Вы недавно посещали: <a href="#" id="lastVisitedLink"></a></p>
+    </div>
+
+    <!-- Раздел с предметами -->
+    <section class="subjects">
+        <div class="subject-card easy" data-subject="words">
+            <div>
+                <span class="difficulty-badge easy">Лёгкий уровень</span>
+                <h3>Слова</h3>
+                <p>Учимся правильно писать и произносить новые слова. Изучаем основы грамматики и правописания. Развиваем навыки чтения и письма. Учимся составлять предложения и рассказы.</p>
+            </div>
+            <button onclick="saveProgress('words')">Перейти к уроку</button>
+        </div>
+        <div class="subject-card easy" data-subject="colors">
+            <div>
+                <span class="difficulty-badge easy">Лёгкий уровень</span>
+                <h3>Цвета</h3>
+                <p>Изучаем цвета и их названия. Учимся различать оттенки и смешивать основные цвета. Развиваем художественное восприятие. Знакомимся с цветовым кругом и гармонией цветов.</p>
+            </div>
+            <button onclick="saveProgress('colors')">Перейти к уроку</button>
+        </div>
+        <div class="subject-card easy" data-subject="books">
+            <div>
+                <span class="difficulty-badge easy">Лёгкий уровень</span>
+                <h3>Книги</h3>
+                <p>Читаем интересные истории и сказки. Развиваем воображение и учимся понимать текст. Знакомимся с классической литературой. Учимся анализировать прочитанное.</p>
+            </div>
+            <button onclick="saveProgress('books')">Перейти к уроку</button>
+        </div>
+        <div class="subject-card" data-subject="mathematics">
+            <div>
+                <h3>Математика</h3>
+                <p>Алгебра и основы математического анализа. Решаем интересные задачи и примеры. Развиваем логическое мышление. Изучаем геометрические фигуры и их свойства.</p>
+            </div>
+            <button onclick="saveProgress('mathematics')">Перейти к урокам</button>
+        </div>
+        <div class="subject-card" data-subject="russian">
+            <div>
+                <h3>Русский язык</h3>
+                <p>Грамматика, орфография и пунктуация. Изучаем правила и исключения русского языка. Развиваем навыки письменной речи. Учимся писать сочинения и изложения.</p>
+            </div>
+            <button onclick="saveProgress('russian')">Перейти к урокам</button>
+        </div>
+        <div class="subject-card" data-subject="drawing">
+            <div>
+                <h3>Рисование</h3>
+                <p>Учимся рисовать разные предметы и создавать красивые картины. Развиваем творческие способности. Изучаем основы композиции. Знакомимся с различными техниками рисования.</p>
+            </div>
+            <button onclick="saveProgress('drawing')">Перейти к урокам</button>
+        </div>
+        <div class="subject-card" data-subject="fruits">
+            <div>
+                <h3>Фрукты и овощи</h3>
+                <p>Изучаем названия фруктов и овощей на русском языке. Учимся описывать их внешний вид. Развиваем словарный запас. Знакомимся с полезными свойствами продуктов.</p>
+            </div>
+            <button onclick="saveProgress('fruits')">Перейти к уроку</button>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer>
+        <p>
+            <button class="dictation-button" onclick="window.location.href='dictation.html'">Диктант</button>
+            <button class="class-button" onclick="showClassModal()">Мой класс</button>
+        </p>
+    </footer>
+
+    <!-- Модальное окно для ввода кода -->
+    <div id="classModal" class="modal">
+        <div class="modal-content">
+            <h3>Введите код класса</h3>
+            <input type="password" id="classCode" placeholder="Введите код">
+            <button onclick="checkClassCode()">Войти</button>
+        </div>
+    </div>
+
+    <script>
+        // Функция для сохранения прогресса
+        function saveProgress(subject) {
+            // Сохраняем последний посещенный раздел
+            localStorage.setItem('lastVisited', subject);
+            localStorage.setItem('lastVisitedTime', new Date().toISOString());
+            
+            // Сохраняем статистику посещений
+            let visits = JSON.parse(localStorage.getItem('visits') || '{}');
+            visits[subject] = (visits[subject] || 0) + 1;
+            localStorage.setItem('visits', JSON.stringify(visits));
+            
+            // Перенаправляем на страницу раздела
+            window.location.href = subject + '.html';
+        }
+
+        // Функция для отображения последнего посещенного раздела
+        function showLastVisited() {
+            const lastVisited = localStorage.getItem('lastVisited');
+            const lastVisitedTime = localStorage.getItem('lastVisitedTime');
+            
+            if (lastVisited && lastVisitedTime) {
+                const lastVisit = new Date(lastVisitedTime);
+                const now = new Date();
+                const hoursDiff = (now - lastVisit) / (1000 * 60 * 60);
+                
+                // Показываем только если прошло не более 24 часов
+                if (hoursDiff < 24) {
+                    const lastVisitedDiv = document.getElementById('lastVisited');
+                    const lastVisitedLink = document.getElementById('lastVisitedLink');
+                    
+                    // Получаем название раздела
+                    const subjectCard = document.querySelector(`[data-subject="${lastVisited}"]`);
+                    const subjectName = subjectCard ? subjectCard.querySelector('h3').textContent : lastVisited;
+                    
+                    lastVisitedLink.textContent = subjectName;
+                    lastVisitedLink.href = lastVisited + '.html';
+                    lastVisitedDiv.classList.add('show');
+                }
+            }
+        }
+
+        // Функция для отображения прогресса на карточках
+        function showProgress() {
+            const visits = JSON.parse(localStorage.getItem('visits') || '{}');
+            
+            Object.entries(visits).forEach(([subject, count]) => {
+                const card = document.querySelector(`[data-subject="${subject}"]`);
+                if (card) {
+                    const progressIndicator = document.createElement('div');
+                    progressIndicator.className = 'progress-indicator';
+                    progressIndicator.textContent = `Посещено ${count} раз`;
+                    card.appendChild(progressIndicator);
+                }
+            });
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            showLastVisited();
+            showProgress();
+        });
+
+        // Функции для работы с модальным окном класса
+        function showClassModal() {
+            document.getElementById('classModal').style.display = 'block';
+        }
+
+        function checkClassCode() {
+            const code = document.getElementById('classCode').value;
+            if (code === '6754') {
+                window.location.href = 'registration.html';
+            } else {
+                alert('Неверный код!');
+            }
+        }
+
+        // Закрытие модальных окон при клике вне их
+        window.onclick = function(event) {
+            const classModal = document.getElementById('classModal');
+            if (event.target === classModal) {
+                classModal.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html> 
