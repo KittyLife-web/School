@@ -3,102 +3,392 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест</title>
+    <title>Тест по школьным предметам</title>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: #f0f9ff;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .back-button {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 0 #e64040;
-            transition: transform 0.2s;
-        }
-
-        .back-button:hover {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #e64040;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         h1 {
             text-align: center;
-            color: #4a4a4a;
+            color: #2c3e50;
             margin-bottom: 30px;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .test-grid {
+        .test-section {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .test-section.active {
+            display: block;
+        }
+
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #e9ecef;
+        }
+
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 10px;
+        }
+
+        .option {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e9ecef;
+        }
+
+        .option:hover {
+            background: #f0f9ff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+
+        .option.correct {
+            background: #4CAF50;
+            color: white;
+            border-color: #45a049;
+        }
+
+        .option.wrong {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff4757;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
             margin-top: 30px;
         }
 
-        .test-card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: transform 0.2s;
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
             cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .test-card:hover {
-            transform: translateY(-5px);
+        button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
         }
 
-        .test-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
         }
 
-        .test-title {
-            font-size: 20px;
-            color: #4a4a4a;
-            margin-bottom: 10px;
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
         }
 
-        .test-description {
-            font-size: 14px;
+        .progress {
+            height: 100%;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .result {
+            text-align: center;
+            display: none;
+        }
+
+        .result h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .score {
+            font-size: 48px;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+
+        .feedback {
             color: #666;
-            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            background: #2196F3;
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            background: #1976D2;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .subject-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .timer {
+            text-align: center;
+            font-size: 20px;
+            color: #666;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <button class="back-button" onclick="window.location.href='index.html'">← Назад на главную</button>
-        <h1>Тесты</h1>
-        
-        <div class="test-grid">
-            <div class="test-card" onclick="window.location.href='colors-test.html'">
-                <div class="test-icon">🎨</div>
-                <div class="test-title">Цвета</div>
-                <div class="test-description">Проверьте свои знания о цветах</div>
-            </div>
+        <h1>Тест по школьным предметам</h1>
+        <div class="timer" id="timer">Время: 00:00</div>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
 
-            <div class="test-card" onclick="window.location.href='words-test.html'">
-                <div class="test-icon">📝</div>
-                <div class="test-title">Слова</div>
-                <div class="test-description">Тест на знание слов</div>
+        <!-- Математика -->
+        <div class="test-section active" id="math">
+            <div class="subject-title">Математика</div>
+            <div class="question">
+                <h3>Сколько будет 15 + 27?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">42</div>
+                    <div class="option" onclick="selectOption(this)">41</div>
+                    <div class="option" onclick="selectOption(this)">43</div>
+                    <div class="option" onclick="selectOption(this)">40</div>
+                </div>
+            </div>
+            <div class="question">
+                <h3>Решите уравнение: 3x + 5 = 20</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">5</div>
+                    <div class="option" onclick="selectOption(this)">7</div>
+                    <div class="option" onclick="selectOption(this)">8</div>
+                    <div class="option" onclick="selectOption(this)">6</div>
+                </div>
             </div>
         </div>
+
+        <!-- Русский язык -->
+        <div class="test-section" id="russian">
+            <div class="subject-title">Русский язык</div>
+            <div class="question">
+                <h3>Выберите слово с правильным написанием:</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Велосипед</div>
+                    <div class="option" onclick="selectOption(this)">Велосепед</div>
+                    <div class="option" onclick="selectOption(this)">Веласипед</div>
+                    <div class="option" onclick="selectOption(this)">Велосыпед</div>
+                </div>
+            </div>
+            <div class="question">
+                <h3>Укажите слово с ударением на втором слоге:</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Звонит</div>
+                    <div class="option" onclick="selectOption(this)">Красивее</div>
+                    <div class="option" onclick="selectOption(this)">Свекла</div>
+                    <div class="option" onclick="selectOption(this)">Торты</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Рисование -->
+        <div class="test-section" id="drawing">
+            <div class="subject-title">Рисование</div>
+            <div class="question">
+                <h3>Какие цвета нужно смешать, чтобы получить зеленый?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Синий и желтый</div>
+                    <div class="option" onclick="selectOption(this)">Красный и синий</div>
+                    <div class="option" onclick="selectOption(this)">Желтый и красный</div>
+                    <div class="option" onclick="selectOption(this)">Синий и белый</div>
+                </div>
+            </div>
+            <div class="question">
+                <h3>Какой инструмент лучше всего подходит для рисования тонких линий?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Карандаш</div>
+                    <div class="option" onclick="selectOption(this)">Кисть</div>
+                    <div class="option" onclick="selectOption(this)">Мелок</div>
+                    <div class="option" onclick="selectOption(this)">Валик</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result" id="result">
+            <h2>Результаты теста</h2>
+            <div class="score" id="score">0%</div>
+            <div class="feedback" id="feedback"></div>
+            <button class="back-button" onclick="window.location.href='index.html'">Вернуться на главную</button>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn" onclick="prevSection()" disabled>Назад</button>
+            <button id="nextBtn" onclick="nextSection()">Далее</button>
+        </div>
     </div>
+
+    <script>
+        let currentSection = 0;
+        const sections = ['math', 'russian', 'drawing'];
+        const correctAnswers = {
+            math: [0, 1],      // Индексы правильных ответов для математики
+            russian: [0, 0],   // Индексы правильных ответов для русского
+            drawing: [0, 0]    // Индексы правильных ответов для рисования
+        };
+        let selectedAnswers = {
+            math: [],
+            russian: [],
+            drawing: []
+        };
+        let startTime;
+
+        function showSection(index) {
+            document.querySelectorAll('.test-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sections[index]).classList.add('active');
+            
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').textContent = index === sections.length - 1 ? 'Завершить' : 'Далее';
+            
+            updateProgress();
+        }
+
+        function selectOption(option) {
+            const questionDiv = option.parentElement;
+            questionDiv.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            option.classList.add('selected');
+            
+            const questionIndex = Array.from(questionDiv.parentElement.parentElement.children).indexOf(questionDiv.parentElement) - 1;
+            const currentSubject = sections[currentSection];
+            selectedAnswers[currentSubject][questionIndex] = Array.from(questionDiv.children).indexOf(option);
+        }
+
+        function prevSection() {
+            if (currentSection > 0) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        }
+
+        function nextSection() {
+            if (currentSection < sections.length - 1) {
+                currentSection++;
+                showSection(currentSection);
+            } else {
+                showResult();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentSection + 1) / sections.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        }
+
+        function showResult() {
+            let correctCount = 0;
+            let totalQuestions = 0;
+
+            for (let subject in correctAnswers) {
+                correctAnswers[subject].forEach((answer, index) => {
+                    if (selectedAnswers[subject][index] === answer) {
+                        correctCount++;
+                    }
+                    totalQuestions++;
+                });
+            }
+
+            const score = Math.round((correctCount / totalQuestions) * 100);
+            document.querySelectorAll('.test-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.querySelector('.controls').style.display = 'none';
+            
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            document.getElementById('score').textContent = score + '%';
+            
+            let feedback;
+            if (score >= 80) {
+                feedback = 'Отличный результат! Вы очень хорошо подготовлены!';
+            } else if (score >= 60) {
+                feedback = 'Хороший результат! Есть небольшие пробелы в знаниях.';
+            } else {
+                feedback = 'Рекомендуем повторить материал и попробовать снова.';
+            }
+            document.getElementById('feedback').textContent = feedback;
+        }
+
+        function updateTimer() {
+            const now = new Date();
+            const diff = Math.floor((now - startTime) / 1000);
+            const minutes = Math.floor(diff / 60);
+            const seconds = diff % 60;
+            document.getElementById('timer').textContent = 
+                `Время: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection(0);
+            startTime = new Date();
+            setInterval(updateTimer, 1000);
+        });
+    </script>
 </body>
 </html> 

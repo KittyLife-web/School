@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информатика</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #A1C4FD 0%, #C2E9FB 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa2c1 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: #2c3e50;
+        }
+
+        .topic {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .topic:hover {
+            transform: translateY(-5px);
+        }
+
+        .topic h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .topic p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .code-example {
+            background: #2c3e50;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .tip {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #2196f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='next.html'">
+            ← Вернуться к предметам
+        </button>
+        
+        <h1>Информатика 💻</h1>
+
+        <div class="topic">
+            <h2>Что такое компьютер?</h2>
+            <p>Компьютер - это электронное устройство, которое может выполнять различные задачи с помощью программ.</p>
+            <div class="tip">
+                Основные части компьютера: монитор, системный блок, клавиатура и мышь.
+            </div>
+        </div>
+
+        <div class="topic">
+            <h2>Первые шаги в программировании</h2>
+            <p>Программирование - это написание инструкций для компьютера на специальном языке.</p>
+            <div class="code-example">
+print("Привет, мир!")
+# Это простая программа на Python
+# Она выводит текст на экран
+            </div>
+        </div>
+
+        <div class="topic">
+            <h2>Интернет и безопасность</h2>
+            <p>Интернет - это глобальная сеть, соединяющая компьютеры по всему миру. Важно соблюдать правила безопасности при работе в интернете.</p>
+            <div class="tip">
+                Никогда не сообщайте незнакомым людям свои личные данные и пароли!
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

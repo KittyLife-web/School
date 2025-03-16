@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: white;
+            color: #2c3e50;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .subject-card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .topics-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .topic-item {
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .topic-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .topic-item h3 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .topic-item p {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            ← Вернуться на главную
+        </button>
+
+        <h1>Курс 3</h1>
+
+        <div class="subjects-grid">
+            <div class="subject-card">
+                <h2>Мастерство</h2>
+                <div class="topics-list">
+                    <a href="paper.html" class="topic-item">
+                        <h3>Работа с бумагой</h3>
+                        <p>Создание поделок из бумаги</p>
+                    </a>
+                    <a href="sculpting.html" class="topic-item">
+                        <h3>Лепка</h3>
+                        <p>Работа с пластилином и глиной</p>
+                    </a>
+                    <a href="embroidery.html" class="topic-item">
+                        <h3>Вышивка и плетение</h3>
+                        <p>Создание узоров и украшений</p>
+                    </a>
+                    <a href="nature.html" class="topic-item">
+                        <h3>Природные материалы</h3>
+                        <p>Поделки из природных материалов</p>
+                    </a>
+                    <a href="decoupage.html" class="topic-item">
+                        <h3>Декупаж и роспись</h3>
+                        <p>Декоративные техники оформления</p>
+                    </a>
+                    <a href="construction.html" class="topic-item">
+                        <h3>Конструирование</h3>
+                        <p>Создание объемных конструкций</p>
+                    </a>
+                </div>
+            </div>
+
+            <div class="subject-card">
+                <h2>Рисование</h2>
+                <div class="topics-list">
+                    <a href="drawing-canvas.html" class="topic-item">
+                        <h3>Интерактивный холст</h3>
+                        <p>Практика рисования онлайн</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

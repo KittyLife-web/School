@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест - Курс 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa2c1 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: #2c3e50;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .question:hover {
+            transform: translateY(-5px);
+        }
+
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #e3e3e3;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            border-color: #4FACFE;
+            background: #f0f9ff;
+        }
+
+        .option.selected {
+            background: #4FACFE;
+            color: white;
+            border-color: #4FACFE;
+        }
+
+        .submit-button {
+            background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 15px;
+            display: none;
+        }
+
+        .result.good {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .result.bad {
+            background: #ffebee;
+            color: #c62828;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='next.html'">
+            ← Вернуться к предметам
+        </button>
+        
+        <h1>Тест по курсу 2</h1>
+
+        <div id="quiz">
+            <div class="question">
+                <h3>1. Какой океан самый большой?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Атлантический</div>
+                    <div class="option" onclick="selectOption(this)">Тихий</div>
+                    <div class="option" onclick="selectOption(this)">Индийский</div>
+                    <div class="option" onclick="selectOption(this)">Северный Ледовитый</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>2. Что такое алгоритм в информатике?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Набор случайных команд</div>
+                    <div class="option" onclick="selectOption(this)">Последовательность действий для решения задачи</div>
+                    <div class="option" onclick="selectOption(this)">Компьютерная программа</div>
+                    <div class="option" onclick="selectOption(this)">Математическая формула</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>3. Какой музыкальный инструмент самый большой в оркестре?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Туба</div>
+                    <div class="option" onclick="selectOption(this)">Контрабас</div>
+                    <div class="option" onclick="selectOption(this)">Виолончель</div>
+                    <div class="option" onclick="selectOption(this)">Барабан</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>4. Какое растение вырабатывает больше всего кислорода?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Фикус</div>
+                    <div class="option" onclick="selectOption(this)">Водоросли</div>
+                    <div class="option" onclick="selectOption(this)">Дуб</div>
+                    <div class="option" onclick="selectOption(this)">Кактус</div>
+                </div>
+            </div>
+
+            <div class="question">
+                <h3>5. Какой инструмент используется для измерения длины в технологии?</h3>
+                <div class="options">
+                    <div class="option" onclick="selectOption(this)">Весы</div>
+                    <div class="option" onclick="selectOption(this)">Линейка</div>
+                    <div class="option" onclick="selectOption(this)">Термометр</div>
+                    <div class="option" onclick="selectOption(this)">Секундомер</div>
+                </div>
+            </div>
+
+            <button class="submit-button" onclick="checkAnswers()">Проверить ответы</button>
+        </div>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        function selectOption(option) {
+            // Убираем выделение у всех опций в текущем вопросе
+            const options = option.parentElement.getElementsByClassName('option');
+            for (let opt of options) {
+                opt.classList.remove('selected');
+            }
+            // Выделяем выбранную опцию
+            option.classList.add('selected');
+        }
+
+        function checkAnswers() {
+            const correctAnswers = [
+                'Тихий',
+                'Последовательность действий для решения задачи',
+                'Контрабас',
+                'Водоросли',
+                'Линейка'
+            ];
+
+            let score = 0;
+            const selectedOptions = document.getElementsByClassName('selected');
+            
+            for (let i = 0; i < selectedOptions.length; i++) {
+                if (selectedOptions[i].textContent === correctAnswers[i]) {
+                    score++;
+                }
+            }
+
+            const result = document.getElementById('result');
+            const percentage = (score / correctAnswers.length) * 100;
+            
+            result.style.display = 'block';
+            if (percentage >= 60) {
+                result.className = 'result good';
+                result.innerHTML = `Поздравляем! Вы правильно ответили на ${score} из ${correctAnswers.length} вопросов (${percentage}%)`;
+            } else {
+                result.className = 'result bad';
+                result.innerHTML = `Вы правильно ответили на ${score} из ${correctAnswers.length} вопросов (${percentage}%). Попробуйте еще раз!`;
+            }
+        }
+    </script>
+</body>
+</html> 

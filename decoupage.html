@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Декупаж и роспись</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #9575CD 0%, #B39DDB 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: white;
+            color: #2c3e50;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .lesson-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .lesson-section {
+            margin-bottom: 30px;
+        }
+
+        .lesson-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .lesson-section p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .techniques-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .technique-card {
+            background: #f3e5f5;
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .technique-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .technique-card h3 {
+            color: #4a148c;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .technique-card p {
+            color: #6a1b9a;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .materials-list {
+            list-style: none;
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .material-item {
+            background: #f3e5f5;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .material-item::before {
+            content: '•';
+            color: #9575CD;
+            font-size: 24px;
+        }
+
+        .steps-container {
+            margin-top: 30px;
+        }
+
+        .step-card {
+            background: #f3e5f5;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: #9575CD;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: #4a148c;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .step-content p {
+            color: #6a1b9a;
+            font-size: 14px;
+        }
+
+        .practice-button {
+            background: linear-gradient(135deg, #9575CD 0%, #B39DDB 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto 0;
+            transition: all 0.3s ease;
+        }
+
+        .practice-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='course3.html'">
+            ← Вернуться к курсу
+        </button>
+
+        <h1>Декупаж и роспись</h1>
+
+        <div class="lesson-content">
+            <div class="lesson-section">
+                <h2>Техники декупажа и росписи</h2>
+                <div class="techniques-grid">
+                    <div class="technique-card">
+                        <h3>Классический декупаж</h3>
+                        <p>Наклеивание салфеток или декупажных карт на поверхность</p>
+                    </div>
+                    <div class="technique-card">
+                        <h3>Объёмный декупаж</h3>
+                        <p>Создание рельефных элементов с помощью специальных паст</p>
+                    </div>
+                    <div class="technique-card">
+                        <h3>Кракелюр</h3>
+                        <p>Создание эффекта состаренной поверхности с трещинками</p>
+                    </div>
+                    <div class="technique-card">
+                        <h3>Художественная роспись</h3>
+                        <p>Ручная роспись акриловыми красками</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lesson-section">
+                <h2>Необходимые материалы</h2>
+                <ul class="materials-list">
+                    <li class="material-item">Салфетки для декупажа</li>
+                    <li class="material-item">Клей ПВА или специальный</li>
+                    <li class="material-item">Акриловые краски</li>
+                    <li class="material-item">Кисти разных размеров</li>
+                    <li class="material-item">Лак для финишного покрытия</li>
+                    <li class="material-item">Грунтовка</li>
+                </ul>
+            </div>
+
+            <div class="lesson-section">
+                <h2>Пошаговый процесс</h2>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Подготовка поверхности</h3>
+                            <p>Очистка, шлифовка и грунтовка поверхности</p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Нанесение фона</h3>
+                            <p>Окрашивание базовым цветом</p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Декупаж или роспись</h3>
+                            <p>Наклеивание салфеток или нанесение рисунка</p>
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>Финишное покрытие</h3>
+                            <p>Нанесение защитного лака</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="practice-button" onclick="window.location.href='course3.html'">
+                Перейти к практике
+            </button>
+        </div>
+    </div>
+</body>
+</html> 

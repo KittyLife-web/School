@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Физкультура</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa2c1 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+            color: #2c3e50;
+        }
+
+        .topic {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .topic:hover {
+            transform: translateY(-5px);
+        }
+
+        .topic h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .topic p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .exercise-item {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .exercise-item h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .exercise-item span {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .exercise-item p {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .health-tip {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .sports-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .sport-item {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .sport-item span {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .warm-up {
+            background: #fce4ec;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .warm-up h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .warm-up ol {
+            margin-left: 20px;
+            color: #666;
+        }
+
+        .warm-up li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='next.html'">
+            ← Вернуться к предметам
+        </button>
+        
+        <h1>Физкультура ⚽</h1>
+
+        <div class="topic">
+            <h2>🏃 Разминка</h2>
+            <p>Перед любыми физическими упражнениями важно сделать разминку!</p>
+            <div class="warm-up">
+                <h3>Простые упражнения для разминки:</h3>
+                <ol>
+                    <li>Наклоны головы (8-10 раз)</li>
+                    <li>Вращение плечами (10-12 раз)</li>
+                    <li>Наклоны туловища (8-10 раз)</li>
+                    <li>Приседания (10-15 раз)</li>
+                    <li>Прыжки на месте (30 секунд)</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="topic">
+            <h2>🎯 Упражнения</h2>
+            <p>Вот несколько полезных упражнений для здоровья:</p>
+            <div class="exercise-grid">
+                <div class="exercise-item">
+                    <span>🏃‍♂️</span>
+                    <h3>Бег</h3>
+                    <p>Укрепляет сердце и мышцы</p>
+                </div>
+                <div class="exercise-item">
+                    <span>🚲</span>
+                    <h3>Велосипед</h3>
+                    <p>Тренирует ноги и выносливость</p>
+                </div>
+                <div class="exercise-item">
+                    <span>🏊‍♂️</span>
+                    <h3>Плавание</h3>
+                    <p>Развивает все группы мышц</p>
+                </div>
+            </div>
+            <div class="health-tip">
+                Совет: Занимайтесь спортом минимум 30 минут каждый день!
+            </div>
+        </div>
+
+        <div class="topic">
+            <h2>⚽ Спортивные игры</h2>
+            <p>Спортивные игры - это весело и полезно!</p>
+            <div class="sports-list">
+                <div class="sport-item">
+                    <span>⚽</span>
+                    Футбол
+                </div>
+                <div class="sport-item">
+                    <span>🏀</span>
+                    Баскетбол
+                </div>
+                <div class="sport-item">
+                    <span>🏐</span>
+                    Волейбол
+                </div>
+                <div class="sport-item">
+                    <span>🏓</span>
+                    Теннис
+                </div>
+                <div class="sport-item">
+                    <span>🏸</span>
+                    Бадминтон
+                </div>
+                <div class="sport-item">
+                    <span>⚾</span>
+                    Бейсбол
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -76,32 +76,59 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
             margin: 150px auto 40px;
+            padding: 0 20px;
         }
 
         .subject-card {
             background: white;
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             text-align: center;
-            transition: transform 0.2s;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
         .subject-card:hover {
             transform: translateY(-5px);
         }
 
-        .subject-card h3 {
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .math::before { background: linear-gradient(90deg, #FF9A9E, #FAD0C4); }
+        .russian::before { background: linear-gradient(90deg, #A1C4FD, #C2E9FB); }
+        .drawing::before { background: linear-gradient(90deg, #96E6A1, #D4FC79); }
+        .english::before { background: linear-gradient(90deg, #FFB347, #FFCC33); }
+        .history::before { background: linear-gradient(90deg, #FF9A9E, #FECFEF); }
+        .biology::before { background: linear-gradient(90deg, #43E97B, #38F9D7); }
+        .physics::before { background: linear-gradient(90deg, #FA709A, #FEE140); }
+        .chemistry::before { background: linear-gradient(90deg, #4FACFE, #00F2FE); }
+        .literature::before { background: linear-gradient(90deg, #F6D365, #FDA085); }
+
+        .subject-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .subject-title {
+            font-size: 24px;
             color: #2c3e50;
             margin-bottom: 10px;
-            font-size: 24px;
+        }
+
+        .subject-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
         }
 
         .subject-card.easy {
@@ -168,6 +195,24 @@
         .class-button:hover {
             transform: translateY(1px);
             box-shadow: 0 1px 0 #388E3C;
+        }
+
+        .next-button {
+            background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 10px;
+            box-shadow: 0 2px 0 #FF7B7B;
+            transition: transform 0.2s;
+        }
+
+        .next-button:hover {
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 #FF7B7B;
         }
 
         .subject-card button {
@@ -280,6 +325,16 @@
         .modal button:hover {
             background: #45a049;
         }
+
+        .course-label {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
     </style>
 </head>
 <body>
@@ -310,6 +365,7 @@
             </div>
             <button onclick="saveProgress('words')">Перейти к уроку</button>
         </div>
+
         <div class="subject-card easy" data-subject="colors">
             <div>
                 <span class="difficulty-badge easy">Лёгкий уровень</span>
@@ -318,6 +374,7 @@
             </div>
             <button onclick="saveProgress('colors')">Перейти к уроку</button>
         </div>
+
         <div class="subject-card easy" data-subject="books">
             <div>
                 <span class="difficulty-badge easy">Лёгкий уровень</span>
@@ -326,6 +383,7 @@
             </div>
             <button onclick="saveProgress('books')">Перейти к уроку</button>
         </div>
+
         <div class="subject-card" data-subject="mathematics">
             <div>
                 <h3>Математика</h3>
@@ -333,6 +391,7 @@
             </div>
             <button onclick="saveProgress('mathematics')">Перейти к урокам</button>
         </div>
+
         <div class="subject-card" data-subject="russian">
             <div>
                 <h3>Русский язык</h3>
@@ -340,6 +399,7 @@
             </div>
             <button onclick="saveProgress('russian')">Перейти к урокам</button>
         </div>
+
         <div class="subject-card" data-subject="drawing">
             <div>
                 <h3>Рисование</h3>
@@ -347,6 +407,7 @@
             </div>
             <button onclick="saveProgress('drawing')">Перейти к урокам</button>
         </div>
+
         <div class="subject-card" data-subject="fruits">
             <div>
                 <h3>Фрукты и овощи</h3>
@@ -358,10 +419,12 @@
 
     <!-- Подвал -->
     <footer>
-        <p>
+        <div class="footer">
             <button class="dictation-button" onclick="window.location.href='dictation.html'">Диктант</button>
             <button class="class-button" onclick="showClassModal()">Мой класс</button>
-        </p>
+            <button class="next-button" onclick="window.location.href='next.html'">Далее</button>
+            <div class="course-label">Курс 1</div>
+        </div>
     </footer>
 
     <!-- Модальное окно для ввода кода -->
@@ -444,13 +507,13 @@
         function checkClassCode() {
             const code = document.getElementById('classCode').value;
             if (code === '6754') {
-                window.location.href = 'registration.html';
+                window.location.href = 'class.html';
             } else {
                 alert('Неверный код!');
             }
         }
 
-        // Закрытие модальных окон при клике вне их
+        // Закрытие модального окна при клике вне его
         window.onclick = function(event) {
             const classModal = document.getElementById('classModal');
             if (event.target === classModal) {

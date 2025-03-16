@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дополнительные темы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #f6f9fc 0%, #eef4f9 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .subject-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--start-color), var(--end-color));
+        }
+
+        .subject-card:nth-child(1) { --start-color: #FF9A9E; --end-color: #FAD0C4; }
+        .subject-card:nth-child(2) { --start-color: #A1C4FD; --end-color: #C2E9FB; }
+        .subject-card:nth-child(3) { --start-color: #96E6A1; --end-color: #D4FC79; }
+        .subject-card:nth-child(4) { --start-color: #FFB347; --end-color: #FFCC33; }
+        .subject-card:nth-child(5) { --start-color: #FA709A; --end-color: #FEE140; }
+        .subject-card:nth-child(6) { --start-color: #4FACFE; --end-color: #00F2FE; }
+
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .subject-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .subject-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .subject-card p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-size: 16px;
+            height: 90px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .subject-card button {
+            background: linear-gradient(135deg, var(--start-color) 0%, var(--end-color) 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 80%;
+        }
+
+        .subject-card button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffa2c1 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .subject-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(255,255,255,0.1) 50%);
+            border-radius: 0 0 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .subjects {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .subject-card p {
+                height: auto;
+            }
+        }
+
+        .course-label {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="course-label">Курс 2</div>
+        <button class="back-button" onclick="window.location.href='index.html'">
+            ← Вернуться на главную
+        </button>
+        
+        <h1 class="page-title">
+            Дополнительные предметы
+            <button class="test-button" onclick="window.location.href='test2.html'">Тест</button>
+            <button class="test-button" onclick="window.location.href='course3.html'" style="background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);">Далее</button>
+        </h1>
+        
+        <div class="subjects">
+            <div class="subject-card">
+                <span class="subject-icon">🌍</span>
+                <h3>География</h3>
+                <p>Увлекательное путешествие по странам и континентам. Изучаем природные явления, климат и культуры разных народов мира.</p>
+                <button onclick="window.location.href='geography.html'">Начать изучение</button>
+            </div>
+
+            <div class="subject-card">
+                <span class="subject-icon">💻</span>
+                <h3>Информатика</h3>
+                <p>Погружаемся в мир компьютеров и программирования. Учимся создавать свои первые программы и работать с информацией.</p>
+                <button onclick="window.location.href='informatics.html'">Начать изучение</button>
+            </div>
+
+            <div class="subject-card">
+                <span class="subject-icon">🎵</span>
+                <h3>Музыка</h3>
+                <p>Открываем волшебный мир музыки. Знакомимся с нотами, инструментами и великими композиторами.</p>
+                <button onclick="window.location.href='music.html'">Начать изучение</button>
+            </div>
+
+            <div class="subject-card">
+                <span class="subject-icon">🌿</span>
+                <h3>Природоведение</h3>
+                <p>Исследуем окружающий мир, изучаем растения, животных и природные явления. Учимся беречь природу.</p>
+                <button onclick="window.location.href='nature.html'">Начать изучение</button>
+            </div>
+
+            <div class="subject-card">
+                <span class="subject-icon">🛠️</span>
+                <h3>Технология</h3>
+                <p>Развиваем творческие навыки через работу с разными материалами. Создаем полезные и красивые вещи своими руками.</p>
+                <button onclick="window.location.href='technology.html'">Начать изучение</button>
+            </div>
+
+            <div class="subject-card">
+                <span class="subject-icon">⚽</span>
+                <h3>Физкультура</h3>
+                <p>Укрепляем здоровье через физические упражнения и спортивные игры. Учимся вести активный образ жизни.</p>
+                <button onclick="window.location.href='physical.html'">Начать изучение</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

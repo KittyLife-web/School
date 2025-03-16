@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математика - Курс 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            background: white;
+            color: #2c3e50;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .topic {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .topic:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .topic-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .topic-number {
+            background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .topic h3 {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .topic p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .topic-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .difficulty {
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .easy { background: #e8f5e9; color: #2e7d32; }
+        .medium { background: #fff3e0; color: #f57c00; }
+        .hard { background: #ffebee; color: #c62828; }
+
+        .start-button {
+            background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='course3.html'">
+            ← Вернуться к предметам
+        </button>
+        
+        <h1>Математика</h1>
+        
+        <div class="topics">
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="topic-number">1</div>
+                    <h3>Алгебраические выражения</h3>
+                </div>
+                <p>Изучение формул сокращённого умножения, разложение на множители и работа с алгебраическими дробями.</p>
+                <div class="topic-footer">
+                    <span class="difficulty easy">Лёгкий</span>
+                    <button class="start-button">Начать</button>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="topic-number">2</div>
+                    <h3>Функции и графики</h3>
+                </div>
+                <p>Построение графиков линейной, квадратичной и других функций. Исследование их свойств.</p>
+                <div class="topic-footer">
+                    <span class="difficulty medium">Средний</span>
+                    <button class="start-button">Начать</button>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="topic-number">3</div>
+                    <h3>Уравнения и системы</h3>
+                </div>
+                <p>Решение линейных, квадратных уравнений и их систем. Применение различных методов.</p>
+                <div class="topic-footer">
+                    <span class="difficulty medium">Средний</span>
+                    <button class="start-button">Начать</button>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="topic-number">4</div>
+                    <h3>Геометрические фигуры</h3>
+                </div>
+                <p>Изучение свойств треугольников, четырёхугольников и окружностей. Решение геометрических задач.</p>
+                <div class="topic-footer">
+                    <span class="difficulty hard">Сложный</span>
+                    <button class="start-button">Начать</button>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="topic-number">5</div>
+                    <h3>Тригонометрия</h3>
+                </div>
+                <p>Знакомство с тригонометрическими функциями, формулами и их применением в задачах.</p>
+                <div class="topic-footer">
+                    <span class="difficulty hard">Сложный</span>
+                    <button class="start-button">Начать</button>
+                </div>
+            </div>
+
+            <div class="topic">
+                <div class="topic-header">
+                    <div class="topic-number">6</div>
+                    <h3>Вероятность и статистика</h3>
+                </div>
+                <p>Основы теории вероятностей, комбинаторики и статистического анализа данных.</p>
+                <div class="topic-footer">
+                    <span class="difficulty medium">Средний</span>
+                    <button class="start-button">Начать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
