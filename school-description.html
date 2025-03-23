@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Описание школы - Волшебный дуб</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: rgb(209, 229, 215);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        .greeting {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .school-name {
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .class-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #D4B08C;
+        }
+
+        .class-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .class-section p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .telegram-section {
+            margin-top: 40px;
+            padding: 20px;
+            background: #e3f2fd;
+            border-radius: 10px;
+        }
+
+        .telegram-section h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .telegram-section ul {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+
+        .telegram-section li {
+            color: #666;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .telegram-section li::before {
+            content: '•';
+            color: #D4B08C;
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+
+        .goodbye {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #D4B08C;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Описание школы</h1>
+        
+        <div class="greeting">
+            Привет, тот кто это читает.
+        </div>
+
+        <div class="school-name">
+            Эта школа называется "Волшебный дуб"
+        </div>
+
+        <p>И тут есть 4 класса.</p>
+        <p>Сейчас объясню.</p>
+
+        <div class="class-section">
+            <h2>1 класс</h2>
+            <p>Это начальный уровень.</p>
+            <p>Начальный уровень - база.</p>
+            <p>На базе основаны следующие задания.</p>
+        </div>
+
+        <div class="class-section">
+            <h2>2 класс</h2>
+            <p>Начинающий уровень.</p>
+            <p>Начинающий уровень - классные задания.</p>
+        </div>
+
+        <div class="class-section">
+            <h2>3 класс</h2>
+            <p>По больше заданий, по больше предметов.</p>
+        </div>
+
+        <div class="class-section">
+            <h2>4 класс</h2>
+            <p>Продвинутый уровень и больше ДЗ.</p>
+        </div>
+
+        <div class="telegram-section">
+            <h2>Ещё:</h2>
+            <ul>
+                <li>Школьный канал Telegram</li>
+                <li>Задания в чате</li>
+                <li>Соревнование в чате</li>
+                <li>В будущем - и тут</li>
+            </ul>
+        </div>
+
+        <div class="goodbye">
+            Всем пока, и желаю удачи!
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="back-button">Вернуться на главную</a>
+        </div>
+    </div>
+</body>
+</html> 

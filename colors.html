@@ -5,397 +5,252 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Изучаем цвета</title>
     <style>
-        body {
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: #f0f9ff;
-            background-image: 
-                radial-gradient(#ff99cc 2px, transparent 2px),
-                radial-gradient(#99ff99 2px, transparent 2px);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
+            background: #f0f8ff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
         }
 
-        .back-button {
-            background: #ff6b6b;
+        .color-image {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            transition: background-color 0.3s;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .color-button {
+            background: #4CAF50;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 15px;
+            border-radius: 10px;
             font-size: 18px;
             cursor: pointer;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 0 #e64040;
             transition: transform 0.2s;
         }
 
-        .back-button:hover {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #e64040;
+        .color-button:hover {
+            transform: scale(1.05);
         }
 
-        h1 {
-            text-align: center;
-            color: #4a4a4a;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 0 #ffffff, 4px 4px 0 rgba(0,0,0,0.1);
+        .color-button.wrong {
+            background: #ff5252;
+            animation: shake 0.5s;
         }
 
-        .colors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
-        .color-card {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .color-card:hover {
-            transform: translateY(-5px) scale(1.02);
-        }
-
-        .color-square {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 15px;
-            border-radius: 15px;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .color-square::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            background: rgba(255,255,255,0.7);
-            border-radius: 50%;
-        }
-
-        .color-name {
+        .task {
             font-size: 24px;
-            font-weight: bold;
-            margin: 10px 0;
-            color: #4a4a4a;
+            margin-bottom: 20px;
+            color: #333;
         }
 
-        .exercise-section {
-            background: white;
-            border-radius: 25px;
-            padding: 30px;
-            margin-top: 40px;
-            box-shadow: 0 10px 0 rgba(0,0,0,0.1);
-        }
-
-        .exercise-title {
-            text-align: center;
-            color: #4a4a4a;
-            font-size: 2em;
+        .progress {
+            font-size: 18px;
+            color: #666;
             margin-bottom: 20px;
         }
 
-        .exercise-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+        .score {
+            font-size: 20px;
+            color: #4CAF50;
+            margin-top: 20px;
+            font-weight: bold;
         }
 
-        .question-square {
-            width: 200px;
-            height: 200px;
-            border-radius: 20px;
-            margin: 20px auto;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
-            animation: float 3s ease-in-out infinite;
+        .wrong-answers {
+            font-size: 20px;
+            color: #ff5252;
+            margin-top: 10px;
+            font-weight: bold;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        .flower {
+            position: fixed;
+            font-size: 40px;
+            animation: rotate 4s linear infinite;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            max-width: 600px;
-            width: 100%;
-        }
-
-        .option-button {
-            background: white;
-            border: 3px solid #e0e0e0;
-            border-radius: 15px;
-            padding: 15px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 0 #d0d0d0;
-        }
-
-        .option-button:hover {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #d0d0d0;
-        }
-
-        .progress-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 20px auto;
-            background: #e0e0e0;
-            border-radius: 15px;
-            overflow: hidden;
-            height: 20px;
-        }
-
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ff9a9e 0%, #fad0c4 100%);
-            transition: width 0.5s ease;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .success-message {
-            display: none;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
-            border-radius: 15px;
-            margin-top: 20px;
-            animation: pop 0.5s ease;
-        }
-
-        @keyframes pop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #ffd700;
-            position: absolute;
-            animation: confetti 3s ease-in-out infinite;
-        }
-
-        @keyframes confetti {
-            0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(360deg); }
-        }
-
-        .answer-input {
-            width: 100%;
-            max-width: 300px;
-            padding: 15px;
-            border: 3px solid #e0e0e0;
-            border-radius: 15px;
-            font-size: 18px;
-            text-align: center;
+            font-size: 28px;
+            color: #4CAF50;
             margin: 20px 0;
-            box-shadow: 0 4px 0 #d0d0d0;
-            transition: all 0.3s;
+            display: none;
         }
 
-        .answer-input:focus {
-            outline: none;
-            border-color: #4dabf7;
-            box-shadow: 0 4px 0 #4dabf7;
-        }
-
-        .answer-input::placeholder {
-            color: #999;
+        .next-button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <button class="back-button" onclick="window.location.href='index.html'">← Назад</button>
-        <h1>🌈 Весёлые цвета 🎨</h1>
-
-        <div class="colors-grid">
-            <div class="color-card" onclick="playColor('красный')">
-                <div class="color-square" style="background: #ff6b6b;"></div>
-            </div>
-            <div class="color-card" onclick="playColor('синий')">
-                <div class="color-square" style="background: #4dabf7;"></div>
-            </div>
-            <div class="color-card" onclick="playColor('жёлтый')">
-                <div class="color-square" style="background: #ffd43b;"></div>
-            </div>
-            <div class="color-card" onclick="playColor('зелёный')">
-                <div class="color-square" style="background: #69db7c;"></div>
-            </div>
-            <div class="color-card" onclick="playColor('оранжевый')">
-                <div class="color-square" style="background: #ffa94d;"></div>
-            </div>
-            <div class="color-card" onclick="playColor('фиолетовый')">
-                <div class="color-square" style="background: #da77f2;"></div>
-            </div>
-            <div class="color-card" onclick="playColor('коричневый')">
-                <div class="color-square" style="background: #a97555;"></div>
-            </div>
-            <div class="color-card" onclick="playColor('розовый')">
-                <div class="color-square" style="background: #faa2c1;"></div>
-            </div>
-        </div>
-
-        <div class="exercise-section">
-            <h2 class="exercise-title">🎯 Давай поиграем!</h2>
-            <div class="exercise-container">
-                <div class="question-square"></div>
-                <input type="text" class="answer-input" placeholder="Введите название цвета...">
-                <div class="progress-container">
-                    <div class="progress-bar"></div>
-                </div>
-            </div>
-            <div class="success-message">
-                <h3>🎉 Поздравляем! 🎉</h3>
-                <p>Ты отлично знаешь цвета!</p>
-                <button onclick="startExercise()">Играть снова</button>
-            </div>
+        <div class="progress" id="progress">Задание 1 из 30</div>
+        <div class="task" id="task">Выберите правильный цвет:</div>
+        <div class="color-image" id="colorImage"></div>
+        <div class="buttons" id="buttons"></div>
+        <div class="score" id="score">Правильных ответов: 0</div>
+        <div class="wrong-answers" id="wrongAnswers">Неправильных ответов: 0</div>
+        <div class="success-message" id="successMessage">
+            Молодец! Ты закончил игру!
+            <br>
+            Правильных ответов: <span id="finalCorrect">0</span>
+            <br>
+            Неправильных ответов: <span id="finalWrong">0</span>
+            <br><br>
+            <button onclick="location.reload()" class="next-button">Играть снова</button>
         </div>
     </div>
 
     <script>
         const colors = [
-            { name: 'красный', hex: '#ff6b6b' },
-            { name: 'синий', hex: '#4dabf7' },
-            { name: 'жёлтый', hex: '#ffd43b' },
-            { name: 'зелёный', hex: '#69db7c' },
-            { name: 'оранжевый', hex: '#ffa94d' },
-            { name: 'фиолетовый', hex: '#da77f2' },
-            { name: 'коричневый', hex: '#a97555' },
-            { name: 'розовый', hex: '#faa2c1' }
+            { name: 'Красный', color: '#FF0000' },
+            { name: 'Синий', color: '#0000FF' },
+            { name: 'Зеленый', color: '#00FF00' },
+            { name: 'Желтый', color: '#FFFF00' },
+            { name: 'Фиолетовый', color: '#800080' },
+            { name: 'Оранжевый', color: '#FFA500' },
+            { name: 'Розовый', color: '#FFC0CB' },
+            { name: 'Голубой', color: '#00FFFF' },
+            { name: 'Коричневый', color: '#A52A2A' },
+            { name: 'Белый', color: '#FFFFFF' },
+            { name: 'Черный', color: '#000000' },
+            { name: 'Серый', color: '#808080' },
+            { name: 'Бирюзовый', color: '#40E0D0' },
+            { name: 'Малиновый', color: '#DC143C' },
+            { name: 'Лимонный', color: '#FFF700' }
         ];
 
-        let currentQuestion = 0;
+        let currentTask = 1;
         let correctAnswers = 0;
-
-        function playColor(color) {
-            const utterance = new SpeechSynthesisUtterance(color);
-            utterance.lang = 'ru-RU';
-            speechSynthesis.speak(utterance);
+        let wrongAnswers = 0;
+        const totalTasks = 30;
+        const flowers = ['🌼', '🌸', '🌺', '🌹'];
+        
+        function createFlowers() {
+            for (let i = 0; i < 5; i++) {
+                const flower = document.createElement('div');
+                flower.className = 'flower';
+                flower.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+                flower.style.left = Math.random() * 100 + 'vw';
+                flower.style.top = Math.random() * 100 + 'vh';
+                document.body.appendChild(flower);
+            }
         }
 
-        function shuffle(array) {
-            return array.sort(() => Math.random() - 0.5);
-        }
+        function showTask() {
+            if (currentTask > totalTasks) {
+                document.getElementById('colorImage').style.display = 'none';
+                document.getElementById('buttons').style.display = 'none';
+                document.getElementById('task').style.display = 'none';
+                document.getElementById('progress').style.display = 'none';
+                document.getElementById('score').style.display = 'none';
+                document.getElementById('wrongAnswers').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('finalCorrect').textContent = correctAnswers;
+                document.getElementById('finalWrong').textContent = wrongAnswers;
+                document.querySelector('.next-button').style.display = 'inline-block';
+                return;
+            }
 
-        function createConfetti() {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * window.innerWidth + 'px';
-            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)].hex;
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 3000);
-        }
+            const progress = document.getElementById('progress');
+            const score = document.getElementById('score');
+            const wrongAnswersElement = document.getElementById('wrongAnswers');
+            progress.textContent = `Задание ${currentTask} из ${totalTasks}`;
+            score.textContent = `Правильных ответов: ${correctAnswers}`;
+            wrongAnswersElement.textContent = `Неправильных ответов: ${wrongAnswers}`;
 
-        function startExercise() {
-            currentQuestion = 0;
-            correctAnswers = 0;
-            document.querySelector('.success-message').style.display = 'none';
-            showQuestion();
-        }
-
-        function showQuestion() {
-            const questionSquare = document.querySelector('.question-square');
             const currentColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            questionSquare.style.background = currentColor.hex;
-            currentCorrectColor = currentColor.name;
-            
-            updateProgress();
-        }
+            const colorImage = document.getElementById('colorImage');
+            colorImage.style.backgroundColor = currentColor.color;
 
-        let currentCorrectColor = '';
+            const buttons = document.getElementById('buttons');
+            buttons.innerHTML = '';
 
-        function checkAnswer() {
-            const userAnswer = document.querySelector('.answer-input').value.toLowerCase().trim();
-            
-            if (userAnswer === currentCorrectColor) {
-                correctAnswers++;
-                createConfetti();
-            } else {
-                correctAnswers = 0;
-                currentQuestion = 0;
-                updateProgress();
-                showQuestion();
-                
-                const resultElement = document.createElement('div');
-                resultElement.textContent = 'Неправильно! Начинаем сначала.';
-                resultElement.style.color = '#ff6b6b';
-                resultElement.style.textAlign = 'center';
-                resultElement.style.marginTop = '10px';
-                resultElement.style.fontSize = '18px';
-                
-                const container = document.querySelector('.exercise-container');
-                const existingMessage = container.querySelector('.error-message');
-                if (existingMessage) {
-                    container.removeChild(existingMessage);
+            const options = [currentColor.name];
+            while (options.length < 4) {
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                if (!options.includes(randomColor.name)) {
+                    options.push(randomColor.name);
                 }
-                resultElement.className = 'error-message';
-                container.appendChild(resultElement);
-                
-                setTimeout(() => {
-                    if (resultElement.parentNode) {
-                        resultElement.parentNode.removeChild(resultElement);
-                    }
-                }, 2000);
             }
-            
-            currentQuestion++;
-            document.querySelector('.answer-input').value = '';
-            
-            if (currentQuestion < 10) {
-                showQuestion();
+
+            options.sort(() => Math.random() - 0.5).forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'color-button';
+                button.textContent = option;
+                button.onclick = () => checkAnswer(button, option, currentColor.name);
+                buttons.appendChild(button);
+            });
+        }
+
+        function checkAnswer(button, selected, correct) {
+            if (selected === correct) {
+                correctAnswers++;
+                currentTask++;
+                showTask();
             } else {
-                showSuccess();
-            }
-            
-            updateProgress();
-        }
-
-        function updateProgress() {
-            const progressBar = document.querySelector('.progress-bar');
-            progressBar.style.width = (currentQuestion * 10) + '%';
-        }
-
-        function showSuccess() {
-            document.querySelector('.success-message').style.display = 'block';
-            for (let i = 0; i < 50; i++) {
-                setTimeout(createConfetti, i * 100);
+                wrongAnswers++;
+                button.classList.add('wrong');
+                document.getElementById('wrongAnswers').textContent = `Неправильных ответов: ${wrongAnswers}`;
+                setTimeout(() => {
+                    button.classList.remove('wrong');
+                }, 500);
             }
         }
 
-        // Добавляем обработчик нажатия Enter
-        document.querySelector('.answer-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkAnswer();
-            }
-        });
-
-        window.onload = startExercise;
+        createFlowers();
+        showTask();
     </script>
 </body>
 </html> 

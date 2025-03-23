@@ -14,7 +14,7 @@
 
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            background: #f0f9ff;
+            background: rgb(209, 229, 215);
             min-height: 100vh;
             position: relative;
             overflow-y: auto;
@@ -39,37 +39,68 @@
             flex: 1;
         }
 
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            text-align: left;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .pinecone {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            animation: spin 3s linear infinite;
+        }
+
+        .pinecone::before {
+            content: '🌰';
+            font-size: 40px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .description-button {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffa2c1 100%);
+            background: #D4B08C;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
+            padding: 12px 25px;
+            border-radius: 30px;
             font-size: 16px;
             cursor: pointer;
             margin-left: 15px;
-            box-shadow: 0 4px 0 #ff4757;
+            box-shadow: 0 4px 0 #B38B6D;
             transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .description-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .description-button:hover::before {
+            transform: translateX(100%);
         }
 
         .description-button:hover {
             transform: translateY(2px);
-            box-shadow: 0 2px 0 #ff4757;
-        }
-
-        .test-button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-left: 20px;
-        }
-
-        .test-button:hover {
-            background: #45a049;
+            box-shadow: 0 2px 0 #B38B6D;
         }
 
         .subjects {
@@ -89,10 +120,13 @@
             transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
+            border: 1px solid #e0e0e0;
+            border-left: 5px solid #00BCD4;
         }
 
         .subject-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
         }
 
         .subject-card::before {
@@ -101,7 +135,40 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
+            height: 3px;
+            background: #00BCD4;
+        }
+
+        .subject-card h3 {
+            color: #2c3e50;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .subject-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .subject-card button {
+            background: #00BCD4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: left;
+        }
+
+        .subject-card button:hover {
+            background: #0097A7;
         }
 
         .math::before { background: linear-gradient(90deg, #FF9A9E, #FAD0C4); }
@@ -238,12 +305,6 @@
             font-size: 16px;
         }
 
-        .hero h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-
         .hero p {
             font-size: 18px;
             color: #666;
@@ -272,14 +333,7 @@
         }
 
         .progress-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
+            display: none;
         }
 
         .modal {
@@ -335,18 +389,90 @@
             text-transform: uppercase;
             letter-spacing: 2px;
         }
+
+        .school-description-button {
+            background: #D4B08C;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 15px;
+            box-shadow: 0 4px 0 #B38B6D;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-description-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .school-description-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .school-description-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #B38B6D;
+        }
+
+        .school-game-button {
+            background: #D4B08C;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 15px;
+            box-shadow: 0 4px 0 #B38B6D;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-game-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .school-game-button:hover::before {
+            transform: translateX(100%);
+        }
+
+        .school-game-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #B38B6D;
+        }
     </style>
 </head>
 <body>
     <!-- Главный раздел -->
     <header class="hero">
         <div class="hero-content">
-            <h1>Добро пожаловать в мир знаний!</h1>
-            <p>Изучайте школьные предметы легко и интересно</p>
+            <h1>Школа Волшебный дуб <span class="pinecone"></span></h1>
         </div>
         <div>
             <button class="description-button" onclick="window.location.href='description.html'">Описание сайта</button>
-            <button class="test-button" onclick="window.location.href='test.html'">Тест</button>
+            <button class="school-description-button" onclick="window.location.href='school-description.html'">Описание школы</button>
+            <button class="school-game-button" onclick="window.location.href='school-game.html'">Игра Школы</button>
         </div>
     </header>
 
@@ -422,7 +548,6 @@
         <div class="footer">
             <button class="dictation-button" onclick="window.location.href='dictation.html'">Диктант</button>
             <button class="class-button" onclick="showClassModal()">Мой класс</button>
-            <button class="next-button" onclick="window.location.href='next.html'">Далее</button>
             <div class="course-label">Курс 1</div>
         </div>
     </footer>
@@ -442,11 +567,6 @@
             // Сохраняем последний посещенный раздел
             localStorage.setItem('lastVisited', subject);
             localStorage.setItem('lastVisitedTime', new Date().toISOString());
-            
-            // Сохраняем статистику посещений
-            let visits = JSON.parse(localStorage.getItem('visits') || '{}');
-            visits[subject] = (visits[subject] || 0) + 1;
-            localStorage.setItem('visits', JSON.stringify(visits));
             
             // Перенаправляем на страницу раздела
             window.location.href = subject + '.html';
@@ -478,25 +598,9 @@
             }
         }
 
-        // Функция для отображения прогресса на карточках
-        function showProgress() {
-            const visits = JSON.parse(localStorage.getItem('visits') || '{}');
-            
-            Object.entries(visits).forEach(([subject, count]) => {
-                const card = document.querySelector(`[data-subject="${subject}"]`);
-                if (card) {
-                    const progressIndicator = document.createElement('div');
-                    progressIndicator.className = 'progress-indicator';
-                    progressIndicator.textContent = `Посещено ${count} раз`;
-                    card.appendChild(progressIndicator);
-                }
-            });
-        }
-
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', () => {
             showLastVisited();
-            showProgress();
         });
 
         // Функции для работы с модальным окном класса
