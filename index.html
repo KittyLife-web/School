@@ -104,11 +104,18 @@
         }
 
         .subjects {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin: 150px auto 40px;
+            padding: 0 20px;
+            max-width: 1200px;
+        }
+
+        .difficulty-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            margin: 150px auto 40px;
-            padding: 0 20px;
         }
 
         .subject-card {
@@ -173,7 +180,6 @@
 
         .math::before { background: linear-gradient(90deg, #FF9A9E, #FAD0C4); }
         .russian::before { background: linear-gradient(90deg, #A1C4FD, #C2E9FB); }
-        .drawing::before { background: linear-gradient(90deg, #96E6A1, #D4FC79); }
         .english::before { background: linear-gradient(90deg, #FFB347, #FFCC33); }
         .history::before { background: linear-gradient(90deg, #FF9A9E, #FECFEF); }
         .biology::before { background: linear-gradient(90deg, #43E97B, #38F9D7); }
@@ -217,6 +223,11 @@
         .difficulty-badge.easy {
             background: #e8f5e9;
             color: #4CAF50;
+        }
+
+        .difficulty-badge.medium {
+            background: #fff3e0;
+            color: #ff9800;
         }
 
         footer {
@@ -461,6 +472,32 @@
             transform: translateY(2px);
             box-shadow: 0 2px 0 #B38B6D;
         }
+
+        .subject-card.medium {
+            border: 2px solid #ff9800;
+        }
+
+        .subject-card.medium h3 {
+            color: #ff9800;
+        }
+
+        .ice-cream-button {
+            background: linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-left: 10px;
+            box-shadow: 0 2px 0 #FF7B7B;
+            transition: transform 0.2s;
+        }
+
+        .ice-cream-button:hover {
+            transform: translateY(1px);
+            box-shadow: 0 1px 0 #FF7B7B;
+        }
     </style>
 </head>
 <body>
@@ -483,63 +520,55 @@
 
     <!-- Раздел с предметами -->
     <section class="subjects">
-        <div class="subject-card easy" data-subject="words">
-            <div>
-                <span class="difficulty-badge easy">Лёгкий уровень</span>
-                <h3>Слова</h3>
-                <p>Учимся правильно писать и произносить новые слова. Изучаем основы грамматики и правописания. Развиваем навыки чтения и письма. Учимся составлять предложения и рассказы.</p>
+        <!-- Легкий уровень -->
+        <div class="difficulty-row">
+            <div class="subject-card easy" data-subject="colors">
+                <div>
+                    <span class="difficulty-badge easy">Лёгкий уровень</span>
+                    <h3>Цвета</h3>
+                    <p>Изучаем цвета и их названия. Учимся различать оттенки и смешивать основные цвета. Развиваем художественное восприятие. Знакомимся с цветовым кругом и гармонией цветов.</p>
+                </div>
+                <button onclick="saveProgress('colors')">Перейти к уроку</button>
             </div>
-            <button onclick="saveProgress('words')">Перейти к уроку</button>
+
+            <div class="subject-card easy" data-subject="books">
+                <div>
+                    <span class="difficulty-badge easy">Лёгкий уровень</span>
+                    <h3>Книги</h3>
+                    <p>Читаем интересные истории и сказки. Развиваем воображение и учимся понимать текст. Знакомимся с классической литературой. Учимся анализировать прочитанное.</p>
+                </div>
+                <button onclick="saveProgress('books')">Перейти к уроку</button>
+            </div>
+
+            <div class="subject-card easy" data-subject="fruits">
+                <div>
+                    <span class="difficulty-badge easy">Лёгкий уровень</span>
+                    <h3>Фрукты и овощи</h3>
+                    <p>Изучаем названия фруктов и овощей.</p>
+                </div>
+                <button onclick="saveProgress('fruits')">Перейти к уроку</button>
+            </div>
         </div>
 
-        <div class="subject-card easy" data-subject="colors">
-            <div>
-                <span class="difficulty-badge easy">Лёгкий уровень</span>
-                <h3>Цвета</h3>
-                <p>Изучаем цвета и их названия. Учимся различать оттенки и смешивать основные цвета. Развиваем художественное восприятие. Знакомимся с цветовым кругом и гармонией цветов.</p>
+        <!-- Средний уровень -->
+        <div class="difficulty-row">
+            <div class="subject-card medium" data-subject="mathematics">
+                <div>
+                    <span class="difficulty-badge medium">Средний уровень</span>
+                    <h3>Математика</h3>
+                    <p>Алгебра и основы математического анализа. Решаем интересные задачи и примеры. Развиваем логическое мышление. Изучаем геометрические фигуры и их свойства.</p>
+                </div>
+                <button onclick="saveProgress('mathematics')">Перейти к урокам</button>
             </div>
-            <button onclick="saveProgress('colors')">Перейти к уроку</button>
-        </div>
 
-        <div class="subject-card easy" data-subject="books">
-            <div>
-                <span class="difficulty-badge easy">Лёгкий уровень</span>
-                <h3>Книги</h3>
-                <p>Читаем интересные истории и сказки. Развиваем воображение и учимся понимать текст. Знакомимся с классической литературой. Учимся анализировать прочитанное.</p>
+            <div class="subject-card medium" data-subject="russian">
+                <div>
+                    <span class="difficulty-badge medium">Средний уровень</span>
+                    <h3>Русский язык</h3>
+                    <p>Грамматика, орфография и пунктуация. Изучаем правила и исключения русского языка. Развиваем навыки письменной речи. Учимся писать сочинения и изложения.</p>
+                </div>
+                <button onclick="saveProgress('russian')">Перейти к урокам</button>
             </div>
-            <button onclick="saveProgress('books')">Перейти к уроку</button>
-        </div>
-
-        <div class="subject-card" data-subject="mathematics">
-            <div>
-                <h3>Математика</h3>
-                <p>Алгебра и основы математического анализа. Решаем интересные задачи и примеры. Развиваем логическое мышление. Изучаем геометрические фигуры и их свойства.</p>
-            </div>
-            <button onclick="saveProgress('mathematics')">Перейти к урокам</button>
-        </div>
-
-        <div class="subject-card" data-subject="russian">
-            <div>
-                <h3>Русский язык</h3>
-                <p>Грамматика, орфография и пунктуация. Изучаем правила и исключения русского языка. Развиваем навыки письменной речи. Учимся писать сочинения и изложения.</p>
-            </div>
-            <button onclick="saveProgress('russian')">Перейти к урокам</button>
-        </div>
-
-        <div class="subject-card" data-subject="drawing">
-            <div>
-                <h3>Рисование</h3>
-                <p>Учимся рисовать разные предметы и создавать красивые картины. Развиваем творческие способности. Изучаем основы композиции. Знакомимся с различными техниками рисования.</p>
-            </div>
-            <button onclick="saveProgress('drawing')">Перейти к урокам</button>
-        </div>
-
-        <div class="subject-card" data-subject="fruits">
-            <div>
-                <h3>Фрукты и овощи</h3>
-                <p>Изучаем названия фруктов и овощей на русском языке. Учимся описывать их внешний вид. Развиваем словарный запас. Знакомимся с полезными свойствами продуктов.</p>
-            </div>
-            <button onclick="saveProgress('fruits')">Перейти к уроку</button>
         </div>
     </section>
 
@@ -548,6 +577,7 @@
         <div class="footer">
             <button class="dictation-button" onclick="window.location.href='dictation.html'">Диктант</button>
             <button class="class-button" onclick="showClassModal()">Мой класс</button>
+            <button class="ice-cream-button" onclick="window.location.href='ice-cream.html'">Создать мороженое</button>
             <div class="course-label">Курс 1</div>
         </div>
     </footer>
